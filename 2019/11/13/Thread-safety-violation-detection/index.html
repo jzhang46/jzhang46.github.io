@@ -9,17 +9,17 @@
     <title>Efficient Scalable Thread-Safety-Violation Detection | iOS Notes</title>
 
     <!-- Open Graph -->
-    <meta name="description" content="Efficient Scalable Thread-Safety-Violation Detection&amp;#x57FA;&amp;#x672C;&amp;#x601D;&amp;#x60F3;&amp;#xFF1A; &amp;#x5217;&amp;#x51FA;&amp;#x7EBF;&amp;#x7A0B;&amp;#x4E0D;&amp;#x5B89;&amp;#x5168;&amp;#x7684;&amp;#x5E38;&amp;#x7528;&amp;#x7C7B;&amp;#x53CA;&amp;#x5176;&amp;#x">
+    <meta name="description" content="&amp;#x57FA;&amp;#x672C;&amp;#x601D;&amp;#x60F3;&amp;#xFF1A; &amp;#x5217;&amp;#x51FA;&amp;#x7EBF;&amp;#x7A0B;&amp;#x4E0D;&amp;#x5B89;&amp;#x5168;&amp;#x7684;&amp;#x5E38;&amp;#x7528;&amp;#x7C7B;&amp;#x53CA;&amp;#x5176;&amp;#x65B9;&amp;#x6CD5;&amp;#xFF0C;&amp;#x5982;[array add:] hook&amp;#x8FD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Efficient Scalable Thread-Safety-Violation Detection">
 <meta property="og:url" content="http://yoursite.com/2019/11/13/Thread-safety-violation-detection/index.html">
 <meta property="og:site_name" content="iOS Notes">
-<meta property="og:description" content="Efficient Scalable Thread-Safety-Violation Detection&amp;#x57FA;&amp;#x672C;&amp;#x601D;&amp;#x60F3;&amp;#xFF1A; &amp;#x5217;&amp;#x51FA;&amp;#x7EBF;&amp;#x7A0B;&amp;#x4E0D;&amp;#x5B89;&amp;#x5168;&amp;#x7684;&amp;#x5E38;&amp;#x7528;&amp;#x7C7B;&amp;#x53CA;&amp;#x5176;&amp;#x">
+<meta property="og:description" content="&amp;#x57FA;&amp;#x672C;&amp;#x601D;&amp;#x60F3;&amp;#xFF1A; &amp;#x5217;&amp;#x51FA;&amp;#x7EBF;&amp;#x7A0B;&amp;#x4E0D;&amp;#x5B89;&amp;#x5168;&amp;#x7684;&amp;#x5E38;&amp;#x7528;&amp;#x7C7B;&amp;#x53CA;&amp;#x5176;&amp;#x65B9;&amp;#x6CD5;&amp;#xFF0C;&amp;#x5982;[array add:] hook&amp;#x8FD">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-28T02:16:09.430Z">
+<meta property="og:updated_time" content="2020-02-28T15:36:25.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Efficient Scalable Thread-Safety-Violation Detection">
-<meta name="twitter:description" content="Efficient Scalable Thread-Safety-Violation Detection&amp;#x57FA;&amp;#x672C;&amp;#x601D;&amp;#x60F3;&amp;#xFF1A; &amp;#x5217;&amp;#x51FA;&amp;#x7EBF;&amp;#x7A0B;&amp;#x4E0D;&amp;#x5B89;&amp;#x5168;&amp;#x7684;&amp;#x5E38;&amp;#x7528;&amp;#x7C7B;&amp;#x53CA;&amp;#x5176;&amp;#x">
+<meta name="twitter:description" content="&amp;#x57FA;&amp;#x672C;&amp;#x601D;&amp;#x60F3;&amp;#xFF1A; &amp;#x5217;&amp;#x51FA;&amp;#x7EBF;&amp;#x7A0B;&amp;#x4E0D;&amp;#x5B89;&amp;#x5168;&amp;#x7684;&amp;#x5E38;&amp;#x7528;&amp;#x7C7B;&amp;#x53CA;&amp;#x5176;&amp;#x65B9;&amp;#x6CD5;&amp;#xFF0C;&amp;#x5982;[array add:] hook&amp;#x8FD">
 
     <script type="application/ld+json">
 {
@@ -123,7 +123,7 @@
     
     <a href="/index.html" class="item">
         <i class="home icon"></i>
-        首页
+        HOME
     </a>
 
     
@@ -158,7 +158,7 @@
 
                     <div class="article-entry" itemprop="articleBody">
                         
-                        <h3 id="Efficient-Scalable-Thread-Safety-Violation-Detection"><a href="#Efficient-Scalable-Thread-Safety-Violation-Detection" class="headerlink" title="Efficient Scalable Thread-Safety-Violation Detection"></a>Efficient Scalable Thread-Safety-Violation Detection</h3><h5 id="&#x57FA;&#x672C;&#x601D;&#x60F3;&#xFF1A;"><a href="#&#x57FA;&#x672C;&#x601D;&#x60F3;&#xFF1A;" class="headerlink" title="&#x57FA;&#x672C;&#x601D;&#x60F3;&#xFF1A;"></a>&#x57FA;&#x672C;&#x601D;&#x60F3;&#xFF1A;</h5><ol class="ui list">
+                        <h5 id="&#x57FA;&#x672C;&#x601D;&#x60F3;&#xFF1A;"><a href="#&#x57FA;&#x672C;&#x601D;&#x60F3;&#xFF1A;" class="headerlink" title="&#x57FA;&#x672C;&#x601D;&#x60F3;&#xFF1A;"></a>&#x57FA;&#x672C;&#x601D;&#x60F3;&#xFF1A;</h5><ol class="ui list">
 <li>&#x5217;&#x51FA;&#x7EBF;&#x7A0B;&#x4E0D;&#x5B89;&#x5168;&#x7684;&#x5E38;&#x7528;&#x7C7B;&#x53CA;&#x5176;&#x65B9;&#x6CD5;&#xFF0C;&#x5982;[array add:]</li>
 <li>hook&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#xFF0C;&#x5728;hook&#x4E2D;&#x968F;&#x673A;&#x63D2;&#x5165;&#x5EF6;&#x65F6;&#xFF0C;&#x4EE5;&#x8BA9;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x51B2;&#x7A81;&#x7684;&#x5730;&#x65B9;&#x66F4;&#x5BB9;&#x6613;&#x53D1;&#x751F;&#x51B2;&#x7A81;<h5 id="&#x7279;&#x70B9;&#xFF1A;"><a href="#&#x7279;&#x70B9;&#xFF1A;" class="headerlink" title="&#x7279;&#x70B9;&#xFF1A;"></a>&#x7279;&#x70B9;&#xFF1A;</h5></li>
 <li>&#x81EA;&#x9002;&#x5E94;&#x7B56;&#x7565;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x8DD1;&#x591A;&#x6B21;&#x5373;&#x53EF;&#x53D1;&#x73B0;&#x5F88;&#x591A;&#x95EE;&#x9898;</li>
@@ -251,7 +251,7 @@
             <div class="column nav-left">
                 
 
-                <a href="/2020/02/28/linux-core-op-performance/" class="ui tiny button">
+                <a href="/2019/11/13/linux-core-op-performance/" class="ui tiny button">
 
                     <i class="angle left icon"></i>
                     
