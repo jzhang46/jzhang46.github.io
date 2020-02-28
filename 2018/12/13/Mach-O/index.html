@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Mach-O | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="1. Dynamic linking (ELF VS. Mach-O) http://timetobleed.com/dynamic-linking-elf-vs-mach-o/  2. App launching1$ xcrun dyldinfo -rebase -bind -lazy_bind &amp;lt;YOUR_APP&amp;gt; //show what dyld need to do to fi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mach-O">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Mach-O/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="1. Dynamic linking (ELF VS. Mach-O) http://timetobleed.com/dynamic-linking-elf-vs-mach-o/  2. App launching1$ xcrun dyldinfo -rebase -bind -lazy_bind &amp;lt;YOUR_APP&amp;gt; //show what dyld need to do to fi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.928Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mach-O">
+<meta name="twitter:description" content="1. Dynamic linking (ELF VS. Mach-O) http://timetobleed.com/dynamic-linking-elf-vs-mach-o/  2. App launching1$ xcrun dyldinfo -rebase -bind -lazy_bind &amp;lt;YOUR_APP&amp;gt; //show what dyld need to do to fi">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Mach-O" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Mach-O
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <h3 id="1-Dynamic-linking-ELF-VS-Mach-O"><a href="#1-Dynamic-linking-ELF-VS-Mach-O" class="headerlink" title="1. Dynamic linking (ELF VS. Mach-O)"></a>1. Dynamic linking (ELF VS. Mach-O)</h3><ul class="ui list">
+<li><a href="http://timetobleed.com/dynamic-linking-elf-vs-mach-o/" target="_blank" rel="noopener">http://timetobleed.com/dynamic-linking-elf-vs-mach-o/</a></li>
+</ul>
+<h3 id="2-App-launching"><a href="#2-App-launching" class="headerlink" title="2. App launching"></a>2. App launching</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xcrun dyldinfo -rebase -<span class="built_in">bind</span> -lazy_bind &lt;YOUR_APP&gt; //show what dyld need to <span class="keyword">do</span> to fix up during launching</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Show-dylib-dependency"><a href="#3-Show-dylib-dependency" class="headerlink" title="3. Show dylib dependency"></a>3. Show dylib dependency</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xcrun dyldinfo -dylibs &lt;YOUR_APP&gt;</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3 id="4-Other-cmds"><a href="#4-Other-cmds" class="headerlink" title="4. Other cmds"></a>4. Other cmds</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//&#x5404;&#x4E2A;&#x6BB5;&#x3001;&#x533A;&#x7684;&#x5927;&#x5C0F;</span><br><span class="line"><span class="variable">$xcrun</span> zie -x -l -m a.out</span><br><span class="line">Segment __PAGEZERO: 0x100000000 (vmaddr 0x0 fileoff 0)</span><br><span class="line">Segment __TEXT: 0x1000 (vmaddr 0x100000000 fileoff 0)</span><br><span class="line">    Section __text: 0x37 (addr 0x100000f30 offset 3888)</span><br><span class="line">    Section __stubs: 0x6 (addr 0x100000f68 offset 3944)</span><br><span class="line">    Section __stub_helper: 0x1a (addr 0x100000f70 offset 3952)</span><br><span class="line">    Section __cstring: 0xe (addr 0x100000f8a offset 3978)</span><br><span class="line">    Section __unwind_info: 0x48 (addr 0x100000f98 offset 3992)</span><br><span class="line">    Section __eh_frame: 0x18 (addr 0x100000fe0 offset 4064)</span><br><span class="line">    total 0xc5</span><br><span class="line">Segment __DATA: 0x1000 (vmaddr 0x100001000 fileoff 4096)</span><br><span class="line">    Section __nl_symbol_ptr: 0x10 (addr 0x100001000 offset 4096)</span><br><span class="line">    Section __la_symbol_ptr: 0x8 (addr 0x100001010 offset 4112)</span><br><span class="line">    total 0x18</span><br><span class="line">Segment __LINKEDIT: 0x1000 (vmaddr 0x100002000 fileoff 8192)</span><br><span class="line">total 0x100003000</span><br><span class="line"></span><br><span class="line">//&#x67D0;&#x4E2A;&#x6BB5;&#x7684;&#x5177;&#x4F53;&#x5185;&#x5BB9;</span><br><span class="line"><span class="variable">$xcrun</span> otool -s __TEXT __text a.out </span><br><span class="line">a.out:</span><br><span class="line">(__TEXT,__text) section</span><br><span class="line">0000000100000f30 55 48 89 e5 48 83 ec 20 48 8d 05 4b 00 00 00 c7 </span><br><span class="line">0000000100000f40 45 <span class="built_in">fc</span> 00 00 00 00 89 7d f8 48 89 75 f0 48 89 c7 </span><br><span class="line">0000000100000f50 b0 00 e8 11 00 00 00 b9 00 00 00 00 89 45 ec 89 </span><br><span class="line">0000000100000f60 c8 48 83 c4 20 5d c3</span><br><span class="line"></span><br><span class="line">//&#x4EE3;&#x7801;&#x6BB5;&#x7684;&#x6C47;&#x7F16;</span><br><span class="line"><span class="variable">$xcrun</span> otool -v -t a.out</span><br><span class="line">a.out:</span><br><span class="line">(__TEXT,__text) section</span><br><span class="line">_main:</span><br><span class="line">0000000100000f30    pushq   %rbp</span><br><span class="line">0000000100000f31    movq    %rsp, %rbp</span><br><span class="line">0000000100000f34    subq    <span class="variable">$0x20</span>, %rsp</span><br><span class="line">0000000100000f38    leaq    0x4b(%rip), %rax</span><br><span class="line">0000000100000f3f    movl    <span class="variable">$0x0</span>, 0xfffffffffffffffc(%rbp)</span><br><span class="line">0000000100000f46    movl    %edi, 0xfffffffffffffff8(%rbp)</span><br><span class="line">0000000100000f49    movq    %rsi, 0xfffffffffffffff0(%rbp)</span><br><span class="line">0000000100000f4d    movq    %rax, %rdi</span><br><span class="line">0000000100000f50    movb    <span class="variable">$0x0</span>, %al</span><br><span class="line">0000000100000f52    callq   0x100000f68</span><br><span class="line">0000000100000f57    movl    <span class="variable">$0x0</span>, %ecx</span><br><span class="line">0000000100000f5c    movl    %eax, 0xffffffffffffffec(%rbp)</span><br><span class="line">0000000100000f5f    movl    %ecx, %eax</span><br><span class="line">0000000100000f61    addq    <span class="variable">$0x20</span>, %rsp</span><br><span class="line">0000000100000f65    popq    %rbp</span><br><span class="line">0000000100000f66    ret</span><br><span class="line"></span><br><span class="line">//&#x5176;&#x4ED6;&#x533A;&#x7684;&#x5185;&#x5BB9;</span><br><span class="line"><span class="variable">$xcrun</span> otool -v -s __TEXT __cstring a.out</span><br><span class="line">a.out:</span><br><span class="line">Contents of (__TEXT,__cstring) section</span><br><span class="line">0x0000000100000f8a  Hello World!\n</span><br><span class="line"></span><br><span class="line">//&#x5176;&#x4ED6;&#x533A;&#x5185;&#x5BB9;</span><br><span class="line"><span class="variable">$xcrun</span> otool -v -s __TEXT __eh_frame a.out </span><br><span class="line">a.out:</span><br><span class="line">Contents of (__TEXT,__eh_frame) section</span><br><span class="line">0000000100000fe0    14 00 00 00 00 00 00 00 01 7a 52 00 01 78 10 01 </span><br><span class="line">0000000100000ff0    10 0c 07 08 90 01 00 00</span><br><span class="line"></span><br><span class="line">//&#x663E;&#x793A;&#x4F9D;&#x8D56;&#x7684;&#x52A8;&#x6001;&#x5E93;</span><br><span class="line"><span class="variable">$xcrun</span> -otool -L a.out</span><br><span class="line">a.out:</span><br><span class="line">    /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation (compatibility version 300.0.0, current version 1056.0.0)</span><br><span class="line">    /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1197.1.1)</span><br><span class="line">    /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 855.11.0)</span><br><span class="line">    /usr/lib/libobjc.A.dylib (compatibility version 1.0.0, current version 228.0.0)</span><br><span class="line"></span><br><span class="line">//&#x663E;&#x793A;symbol table</span><br><span class="line"><span class="variable">$xcrun</span> nm -nm a.out </span><br><span class="line">                 (undefined) external _NSFullUserName (from Foundation)</span><br><span class="line">                 (undefined) external _NSLog (from Foundation)</span><br><span class="line">                 (undefined) external _OBJC_CLASS_<span class="variable">$_NSObject</span> (from CoreFoundation)</span><br><span class="line">                 (undefined) external _OBJC_METACLASS_<span class="variable">$_NSObject</span> (from CoreFoundation)</span><br><span class="line">                 (undefined) external ___CFConstantStringClassReference (from CoreFoundation)</span><br><span class="line">                 (undefined) external __objc_empty_cache (from libobjc)</span><br><span class="line">                 (undefined) external __objc_empty_vtable (from libobjc)</span><br><span class="line">                 (undefined) external _objc_autoreleasePoolPop (from libobjc)</span><br><span class="line">                 (undefined) external _objc_autoreleasePoolPush (from libobjc)</span><br><span class="line">                 (undefined) external _objc_msgSend (from libobjc)</span><br><span class="line">                 (undefined) external _objc_msgSend_fixup (from libobjc)</span><br><span class="line">                 (undefined) external dyld_stub_binder (from libSystem)</span><br><span class="line">0000000100000000 (__TEXT,__text) [referenced dynamically] external __mh_execute_header</span><br><span class="line">0000000100000e50 (__TEXT,__text) external _main</span><br><span class="line">0000000100000ed0 (__TEXT,__text) non-external -[Foo run]</span><br><span class="line">0000000100001128 (__DATA,__objc_data) external _OBJC_METACLASS_<span class="variable">$_Foo</span></span><br><span class="line">0000000100001150 (__DATA,__objc_data) external _OBJC_CLASS_<span class="variable">$_Foo</span></span><br></pre></td></tr></table></figure>
+
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:39:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Macro-tricks/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    Macro tricks
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/iOS-Environment-variables/" class="ui tiny button">
+                    
+                    iOS Environment variables
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

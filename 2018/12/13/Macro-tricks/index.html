@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Macro tricks | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="STRINGIFYDefinition: 12#define xstr(s) str(s)#define str(s) #s  Example: 1234567#define foo 4str (foo)     &amp;#x2192; &amp;quot;foo&amp;quot;xstr (foo)     &amp;#x2192; xstr (4)     &amp;#x2192; str (4)     &amp;#x2192; &amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Macro tricks">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Macro-tricks/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="STRINGIFYDefinition: 12#define xstr(s) str(s)#define str(s) #s  Example: 1234567#define foo 4str (foo)     &amp;#x2192; &amp;quot;foo&amp;quot;xstr (foo)     &amp;#x2192; xstr (4)     &amp;#x2192; str (4)     &amp;#x2192; &amp;q">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.928Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Macro tricks">
+<meta name="twitter:description" content="STRINGIFYDefinition: 12#define xstr(s) str(s)#define str(s) #s  Example: 1234567#define foo 4str (foo)     &amp;#x2192; &amp;quot;foo&amp;quot;xstr (foo)     &amp;#x2192; xstr (4)     &amp;#x2192; str (4)     &amp;#x2192; &amp;q">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Macro-tricks" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Macro tricks
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <h3 id="STRINGIFY"><a href="#STRINGIFY" class="headerlink" title="STRINGIFY"></a>STRINGIFY</h3><p>Definition:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#define xstr(s) str(s)</span></span><br><span class="line"><span class="meta">#define str(s) #s</span></span><br></pre></td></tr></table></figure>
+
+<p>Example:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#define foo 4</span></span><br><span class="line">str (foo)</span><br><span class="line">     &#x2192; <span class="string">&quot;foo&quot;</span></span><br><span class="line">xstr (foo)</span><br><span class="line">     &#x2192; xstr (<span class="number">4</span>)</span><br><span class="line">     &#x2192; str (<span class="number">4</span>)</span><br><span class="line">     &#x2192; <span class="string">&quot;4&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Nested-if-followed-by-else"><a href="#Nested-if-followed-by-else" class="headerlink" title="Nested if followed by else"></a>Nested if followed by else</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The GNU compiler emits a warning if nested &quot;if&quot; statements are followed by</span></span><br><span class="line"><span class="comment">// an &quot;else&quot; statement and braces are not used to explicitly disambiguate the</span></span><br><span class="line"><span class="comment">// &quot;else&quot; binding.  This leads to problems with code like:</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//   if (gate)</span></span><br><span class="line"><span class="comment">//     ASSERT_*(condition) &lt;&lt; &quot;Some message&quot;;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// The &quot;switch (0) case 0:&quot; idiom is used to suppress this.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#ifdef __INTEL_COMPILER</span></span><br><span class="line"><span class="meta"># define GTEST_AMBIGUOUS_ELSE_BLOCKER_</span></span><br><span class="line"><span class="meta">#else</span></span><br><span class="line"><span class="meta"># define GTEST_AMBIGUOUS_ELSE_BLOCKER_ switch (0) case 0: default:  // NOLINT</span></span><br><span class="line"><span class="meta">#endif</span></span><br></pre></td></tr></table></figure>
+
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:40:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Memory-related/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    Memory related
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Mach-O/" class="ui tiny button">
+                    
+                    Mach-O
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

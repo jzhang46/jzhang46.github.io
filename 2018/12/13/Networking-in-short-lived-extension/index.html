@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Networking in short lived extension | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677692 Views0 RepliesLatest reply: Apr 26, 2017 1:47 AM by">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Networking in short lived extension">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Networking-in-short-lived-extension/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677692 Views0 RepliesLatest reply: Apr 26, 2017 1:47 AM by">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.929Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Networking in short lived extension">
+<meta name="twitter:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677692 Views0 RepliesLatest reply: Apr 26, 2017 1:47 AM by">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Networking-in-short-lived-extension" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Networking in short lived extension
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">692 Views</span><br><span class="line">0 Replies</span><br><span class="line">Latest reply: Apr 26, 2017 1:47 AM by eskimo </span><br><span class="line">Apple Staff (8,640 points)</span><br><span class="line">eskimoApr 26, 2017 1:47 AM</span><br><span class="line"></span><br><span class="line">There are many cases where you want to do long-running network operations in a short-lived app extension.  For example, you might be creating a share extension that needs to upload a large image to an Internet server.  Doing this correctly is quite tricky.  The rest of this post describes some of these pitfalls and explains how to get around them.</span><br><span class="line"></span><br><span class="line">Just by way of context:</span><br><span class="line">* Most of the following was written during the iOS 8.1 timeframe, although AFAIK there&#x2019;s been no specific changes in this space since then.</span><br><span class="line">* The specific focus here is a share extension, although the behaviour is likely to be similar for other short-lived extensions.</span><br><span class="line">* I wasn&#x2019;t using SLComposeServiceViewController although I have no reason to believe that makes a difference.</span><br><span class="line">* I was testing on a device, not the simulator.  In my experience the simulator is much less likely to terminate a share extension, which affects how things behave as I&#x2019;ll explain later.</span><br><span class="line"></span><br><span class="line">My app and its share extension have an app group in common.  I started by verifying that this app group was working as expected (using NSUserDefaults).</span><br><span class="line"></span><br><span class="line">The NSURLSession must be in that app group; set this via the sharedContainerIdentifier property of the NSURLSessionConfiguration object you use to create the session.</span><br><span class="line"></span><br><span class="line">The app and the share extension must use the same NSURLSession background session identifier (the value you pass in to +backgroundSessionConfigurationWithIdentifier: when creating the configuration that you use to create the session).</span><br><span class="line"></span><br><span class="line">When an NSURLSession background session is shared like this, it&#x2019;s critical to understand that the session only allows one process to &#x2018;connect&#x2019; to it at a time.  If a process is connected to the session and another tries to connect, the second process has its session immediately invalidated with NSURLErrorBackgroundSessionInUseByAnotherProcess.</span><br><span class="line"></span><br><span class="line">The connected session is the one that receives the session&#x2019;s delegate callbacks.</span><br><span class="line"></span><br><span class="line">IMPORTANT If callbacks are generated when no process is connected, the background session resumes (or relaunches) the app rather than the extension.</span><br><span class="line"></span><br><span class="line">Also, if a process is connected to a session and is then suspended or terminates, the session disconnects internally.  If the process was terminated, the reconnection happens when your code creates its NSURLSession object on next launch.  If the process was suspended, the reconnect happens when the app is resumed with the -application:handleEventsForBackgroundURLSession:completionHandler: delegate callback (and remember that this is always the app, not the extension, per the previous paragraph).</span><br><span class="line"></span><br><span class="line">The only way to programmatically disconnect from a session is to invalidate it.</span><br><span class="line"></span><br><span class="line">The expected behaviour here is that the extension will start an NSURLSession task and then immediately quit (by calling -completeRequestReturningItems:completionHandler:).  The system will then resume (or relaunch) the main app to handle any delegate callbacks.</span><br><span class="line"></span><br><span class="line">When the system resumes or relaunches the main app to handle background session events, it calls -application:handleEventsForBackgroundURLSession:completionHandler:.  The main app is expected to:</span><br><span class="line">1. Save away the completion handler block</span><br><span class="line">2. Reconnect to the session (if necessary) &#x2014; This involves creating the NSURLSession object if it doesn&#x2019;t currently exist.</span><br><span class="line">3. Handle delegate events from that session</span><br><span class="line">4. Invalidate the session when those events are all done &#x2014; The app knows this because the session calls the -URLSessionDidFinishEventsForBackgroundURLSession: delegate callback.</span><br><span class="line">5. Call the completion handler block that was saved in step 1</span><br><span class="line"></span><br><span class="line">This leaves the app disconnected from the session, so future invocations of the extension don&#x2019;t have to worry about the NSURLErrorBackgroundSessionInUseByAnotherProcess problem I mentioned earlier.</span><br><span class="line"></span><br><span class="line">This design works best if each extension hosted by the app has its own shared session.  If the app hosts multiple extensions, and they all used the same shared session, they could end up stomping on each other.</span><br><span class="line"></span><br><span class="line">In my tests I&#x2019;ve noticed that some annoying behaviour falls out of this design: if you start a task from an extension, it&#x2019;s non-deterministic as to whether the app or extension gets the &#x2018;did complete&#x2019; callback.  If the task runs super quickly, the extension typically gets the callback.  If the task takes longer, the system has time to terminate the extension and the app is resumed to handle it.</span><br><span class="line"></span><br><span class="line">There&#x2019;s really no way around this.  The workaround is to put the code that handles request completion in both your app and your extension (possibly reusing the code via a framework).</span><br><span class="line"></span><br><span class="line">It would be nice if the extension could disconnect from the session immediately upon starting its request.  Alas, that&#x2019;s not currently possible (r. 18748008).  The only way to programmatically disconnect from the session is to invalidate it, and that either cancels all the running tasks (-invalidateAndCancel) or waits for them to complete (-finishTasksAndInvalidate), neither of which is appropriate.</span><br><span class="line"></span><br><span class="line">One interesting edge case occurs when the app is in the foreground while the share extension comes up. For example, the app might have a share button, from which the user can invoke the share extension. If the share extension starts an NSURLSession task in that case, it can result in the app&#x2019;s -application:handleEventsForBackgroundURLSession:completionHandler: callback being called while the app is in the foreground.  The app doesn&#x2019;t need to behave differently in this case, but it&#x2019;s a little unusual.</span><br><span class="line"></span><br><span class="line">Xcode&#x2019;s debugger prevents the system from suspending the process being debugged.  So, if you run your extension from Xcode, or you attach to its process some time after launch, the process will continue to execute in situations where the system would otherwise have suspended it.  This makes it tricky to investigate problems with the &#x201C;extension was suspended before the network request finished&#x201D; case.  The best way to investigate any issues you encounter is via logging.</span><br><span class="line"></span><br><span class="line">Note For more information about debugging problems with background networking, see Testing Background Session Code.</span><br><span class="line"></span><br><span class="line">Keep in mind that not all networking done by your extension has to use a background session.  You should use a background session for long-running requests, but if you have short-running requests then it&#x2019;s best to run them in a standard session.</span><br><span class="line"></span><br><span class="line">For example, imagine you have a share extension that needs to make two requests:</span><br><span class="line">* The first request simply gets an upload authorisation token from the server.  This request is expected to finish very quickly.</span><br><span class="line">* The second request actually uploads the file (including the upload authorisation token from the previous request), and is expected to take a long time.  </span><br><span class="line">It makes sense to only use a background session for the second request.  The first request, being short-running, can be done in a standard session, and that will definitely simplify your code.  </span><br><span class="line">When doing this you have to prevent your extension from suspending while the short-lived request is in flight.  You can use -[NSProcessInfo performExpiringActivityWithReason:usingBlock:] for this.  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Share and Enjoy </span><br><span class="line"></span><br><span class="line">&#x2014; </span><br><span class="line"></span><br><span class="line">Quinn &#x201C;The Eskimo!&#x201D; </span><br><span class="line"></span><br><span class="line">Apple Developer Relations, Developer Technical Support, Core OS/Hardware </span><br><span class="line"></span><br><span class="line">let myEmail = &quot;eskimo&quot; + &quot;1&quot; + &quot;@apple.com&quot;</span><br><span class="line"></span><br><span class="line">Change History</span><br><span class="line">* 5 Dec 2014 &#x2014; First posted on the old DevForums.</span><br><span class="line">* 26 Apr 2017 &#x2014; Moved to the new DevForums.  Made many editorial changes.  Added the section on Xcode&#x2019;s debugger.  Added a section on short-running network requests.</span><br></pre></td></tr></table></figure>
+
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:42:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Networking/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    Networking
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Memory-related/" class="ui tiny button">
+                    
+                    Memory related
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

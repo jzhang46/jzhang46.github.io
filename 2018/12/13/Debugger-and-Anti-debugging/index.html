@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Debugger &amp; Anti-debugging | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="Anti-debugging 使用ptrace123456789101112#if !defined(PT_DENY_ATTACH)#define PT_DENY_ATTACH 31#endiftypedef int (*ptrace_ptr)(int request, pid_t pid, caddr_t addr, void *data);- (void)anti_debug &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debugger &amp; Anti-debugging">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Debugger-and-Anti-debugging/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="Anti-debugging 使用ptrace123456789101112#if !defined(PT_DENY_ATTACH)#define PT_DENY_ATTACH 31#endiftypedef int (*ptrace_ptr)(int request, pid_t pid, caddr_t addr, void *data);- (void)anti_debug &amp;#123;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.927Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Debugger &amp; Anti-debugging">
+<meta name="twitter:description" content="Anti-debugging 使用ptrace123456789101112#if !defined(PT_DENY_ATTACH)#define PT_DENY_ATTACH 31#endiftypedef int (*ptrace_ptr)(int request, pid_t pid, caddr_t addr, void *data);- (void)anti_debug &amp;#123;">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Debugger-and-Anti-debugging" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Debugger &amp; Anti-debugging
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <h3 id="Anti-debugging"><a href="#Anti-debugging" class="headerlink" title="Anti-debugging"></a>Anti-debugging</h3><ul class="ui list">
+<li>&#x4F7F;&#x7528;ptrace<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#if !defined(PT_DENY_ATTACH)</span></span><br><span class="line"><span class="meta">#define PT_DENY_ATTACH 31</span></span><br><span class="line"><span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> (*ptrace_ptr)(<span class="keyword">int</span> request, pid_t pid, caddr_t addr, <span class="keyword">void</span> *data);</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)anti_debug {</span><br><span class="line">    <span class="keyword">void</span> *handle = dlopen(<span class="literal">NULL</span>, RTLD_GLOBAL|RTLD_NOW);</span><br><span class="line">    ptrace_ptr p_ptr = dlsym(handle, <span class="string">&quot;ptrace&quot;</span>);</span><br><span class="line">    p_ptr(PT_DENY_ATTACH, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    dlclose(handle);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<a id="more"></a>
+
+<ul class="ui list">
+<li>&#x4F7F;&#x7528;sysctl<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#include <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#include <span class="meta-string">&lt;stdbool.h&gt;</span></span></span><br><span class="line"><span class="meta">#include <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#include <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#include <span class="meta-string">&lt;sys/sysctl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">bool</span> AmIBeingDebugged(<span class="keyword">void</span>)</span><br><span class="line"><span class="comment">// Returns true if the current process is being debugged (either</span></span><br><span class="line"><span class="comment">// running under the debugger or has a debugger attached post facto).</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">int</span>                junk;</span><br><span class="line">  <span class="keyword">int</span>                mib[<span class="number">4</span>];</span><br><span class="line">  <span class="keyword">struct</span> kinfo_proc  info;</span><br><span class="line">  size_t              size;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Initialize the flags so that, if sysctl fails for some bizarre</span></span><br><span class="line">  <span class="comment">// reason, we get a predictable result.</span></span><br><span class="line">  </span><br><span class="line">  info.kp_proc.p_flag = <span class="number">0</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Initialize mib, which tells sysctl the info we want, in this case</span></span><br><span class="line">  <span class="comment">// we&apos;re looking for information about a specific process ID.</span></span><br><span class="line">  </span><br><span class="line">  mib[<span class="number">0</span>] = <span class="built_in">CTL_KERN</span>;</span><br><span class="line">  mib[<span class="number">1</span>] = KERN_PROC;</span><br><span class="line">  mib[<span class="number">2</span>] = KERN_PROC_PID;</span><br><span class="line">  mib[<span class="number">3</span>] = getpid();</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Call sysctl.</span></span><br><span class="line">  </span><br><span class="line">  size = <span class="keyword">sizeof</span>(info);</span><br><span class="line">  junk = sysctl(mib, <span class="keyword">sizeof</span>(mib) / <span class="keyword">sizeof</span>(*mib), &amp;info, &amp;size, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">  assert(junk == <span class="number">0</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// We&apos;re being debugged if the P_TRACED flag is set.</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> ( (info.kp_proc.p_flag &amp; P_TRACED) != <span class="number">0</span> );</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="How-debuggers-work"><a href="#How-debuggers-work" class="headerlink" title="How debuggers work"></a>How debuggers work</h3><p>ptrace API&#xFF1A;</p>
+<ul class="ui list">
+<li>&#x53EF;&#x4EE5;&#x4F7F;&#x5B50;&#x8FDB;&#x7A0B;&#x6307;&#x5B9A;&#x5141;&#x8BB8;&#x7236;&#x8FDB;&#x7A0B;trace&#x81EA;&#x5DF1;</li>
+<li>&#x53EF;&#x4EE5;&#x5728;&#x7236;&#x8FDB;&#x7A0B;&#x4E2D;&#x67E5;&#x770B;&#x3001;&#x4FEE;&#x6539;&#x5B50;&#x8FDB;&#x7A0B;&#x5BC4;&#x5B58;&#x5668;&#x3001;&#x5185;&#x5B58;&#x7B49;&#x5185;&#x5BB9;&#xFF0C;&#x6216;&#x8005;&#x5355;&#x6B65;&#x6267;&#x884C;&#x6307;&#x4EE4;</li>
+</ul>
+<p>breakpoint&#x662F;&#x7528;int 3&#x8F6F;&#x4E2D;&#x65AD;&#x5B9E;&#x73B0;&#xFF0C;&#x5728;&#x65AD;&#x70B9;&#x7684;&#x4EE3;&#x7801;&#x4F4D;&#x7F6E;&#x5C06;&#x539F;&#x4F4D;&#x7F6E;&#x4E0A;&#x7684;&#x4E00;&#x4E2A;&#x5B57;&#x8282;&#x7684;&#x4EE3;&#x7801;&#x7528;0xCC&#x66FF;&#x6362;&#xFF08;0xCC&#x5373;&#x4E3A;int 3&#xFF09;&#xFF0C;&#x5B50;&#x8FDB;&#x7A0B;cpu&#x6267;&#x884C;&#x5230;0xCC&#x5904;&#x5373;&#x505C;&#x6B62;&#xFF0C;&#x5E76;&#x53D1;&#x9001;sigtrap&#xFF0C;&#x7236;&#x8FDB;&#x7A0B;&#x6536;&#x5230;&#x6B64;&#x6D88;&#x606F;&#x5373;&#x53EF;&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x7684;deug&#x64CD;&#x4F5C;</p>
+<p>&#x53C2;&#x8003;&#x8D44;&#x6599;&#xFF1A;</p>
+<blockquote>
+<p><a href="https://eli.thegreenplace.net/2011/01/23/how-debuggers-work-part-1/" target="_blank" rel="noopener">https://eli.thegreenplace.net/2011/01/23/how-debuggers-work-part-1/</a><br><a href="https://eli.thegreenplace.net/2011/01/27/how-debuggers-work-part-2-breakpoints/" target="_blank" rel="noopener">https://eli.thegreenplace.net/2011/01/27/how-debuggers-work-part-2-breakpoints/</a><br><a href="https://eli.thegreenplace.net/2011/02/07/how-debuggers-work-part-3-debugging-information" target="_blank" rel="noopener">https://eli.thegreenplace.net/2011/02/07/how-debuggers-work-part-3-debugging-information</a></p>
+</blockquote>
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:33:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Dlsym-locating/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    dlsym locating
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Crashlog-related/" class="ui tiny button">
+                    
+                    Crashlog related
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

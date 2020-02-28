@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>dlsym locating | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="因为“众所周知的原因”，dlsym不能在运行时调用任意传入的参数，为避开这一限制，可使用如下动态查找dlsym的机制：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dlsym locating">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Dlsym-locating/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="因为“众所周知的原因”，dlsym不能在运行时调用任意传入的参数，为避开这一限制，可使用如下动态查找dlsym的机制：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/pics/dlsym_address_arm64.png">
+<meta property="og:image" content="http://yoursite.com/pics/arm64_bl_dlsym_example.png">
+<meta property="og:image" content="http://yoursite.com/pics/arm64_bl_instruction.png">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.927Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dlsym locating">
+<meta name="twitter:description" content="因为“众所周知的原因”，dlsym不能在运行时调用任意传入的参数，为避开这一限制，可使用如下动态查找dlsym的机制：">
+<meta name="twitter:image" content="http://yoursite.com/pics/dlsym_address_arm64.png">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Dlsym-locating" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    dlsym locating
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <p>&#x56E0;&#x4E3A;&#x201C;&#x4F17;&#x6240;&#x5468;&#x77E5;&#x7684;&#x539F;&#x56E0;&#x201D;&#xFF0C;dlsym&#x4E0D;&#x80FD;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x8C03;&#x7528;&#x4EFB;&#x610F;&#x4F20;&#x5165;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x4E3A;&#x907F;&#x5F00;&#x8FD9;&#x4E00;&#x9650;&#x5236;&#xFF0C;&#x53EF;&#x4F7F;&#x7528;&#x5982;&#x4E0B;&#x52A8;&#x6001;&#x67E5;&#x627E;dlsym&#x7684;&#x673A;&#x5236;&#xFF1A;</p>
+<a id="more"></a>
+
+<ul class="ui list">
+<li>&#x9996;&#x5148;&#x5728;&#x5F85;&#x4E0A;&#x7EBF;&#x7684;&#x4EE3;&#x7801;&#x4E2D;&#x8C03;&#x7528;dlsym&#x5E76;&#x4F20;&#x5165;&#x4E00;&#x4E2A;&#x5E38;&#x91CF;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5982;dlsym(&#x201C;CFRelease&#x201D;)&#xFF0C;&#x5E76;&#x8BBE;&#x5B9A;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x4F18;&#x5316;&#x9009;&#x9879;&#x5E76;&#x4E14;&#x4E0D;&#x652F;&#x6301;thumb-mode&#xFF0C;&#x4EE5;&#x4FDD;&#x8BC1;&#x8DF3;&#x8F6C;&#x5230;dlsym&#x7684;&#x6307;&#x4EE4;&#x4E0E;helper_method&#x7684;&#x51FD;&#x6570;&#x8D77;&#x59CB;&#x5730;&#x5740;&#x4FDD;&#x6301;&#x4E0D;&#x53D8;&#xFF0C;&#x5982;&#x4E0B;&#x4F8B;&#xFF1A;</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((noinline, optnone, target(<span class="string">&quot;no-thumb-mode&quot;</span>))) <span class="keyword">static</span> <span class="keyword">void</span> *helper_method() {</span><br><span class="line">    <span class="comment">//Will not really call this, just put here to ensure dlsym is here</span></span><br><span class="line">    <span class="keyword">return</span> dlsym(RTLD_DEFAULT, <span class="string">&quot;CFRelease&quot;</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x5728;arm64&#x4E0B;&#xFF0C;&#x5176;&#x6C47;&#x7F16;&#x6307;&#x4EE4;&#x5982;&#x4E0B;&#xFF1A;<br><a class="magnific-img" href="/pics/dlsym_address_arm64.png"><img src="/pics/dlsym_address_arm64.png" alt="dlsym_address_arm64" class="ui centered image"></a></p>
+<ul class="ui list">
+<li>&#x8BB0;&#x5F55;&#x5404;&#x4E2A;&#x5E73;&#x53F0;&#x4E0A;helper_method&#x4E0E;dlsym&#x8DF3;&#x8F6C;&#x6307;&#x4EE4;&#x4E4B;&#x95F4;&#x7684;&#x504F;&#x79FB;&#xFF08;&#x4E0A;&#x4F8B;&#x4E2D;&#x4E3A;<code>0x100006458-0x100006444=0x14</code>&#xFF09;&#xFF0C;&#x4EE5;&#x4FBF;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x6839;&#x636E;&#x6B64;&#x6570;&#x636E;&#x5F97;&#x5230;&#x8DF3;&#x8F6C;&#x6307;&#x4EE4;&#x7684;&#x5730;&#x5740;&#xFF08;bl&#x6216;call&#x6307;&#x4EE4;&#xFF09;</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> uint16_t getOffsetFromHelperMethod() {</span><br><span class="line">    uint16_t offsetFromHelperMethod = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#if defined(__aarch64__)</span></span><br><span class="line">    offsetFromHelperMethod = <span class="number">0x14</span>;</span><br><span class="line"><span class="meta">#elif defined(__arm__)</span></span><br><span class="line">    offsetFromHelperMethod = <span class="number">0x18</span>;</span><br><span class="line"><span class="meta">#elif defined(__i386__)</span></span><br><span class="line">    offsetFromHelperMethod = <span class="number">0x1E</span>;</span><br><span class="line"><span class="meta">#elif defined(__x86_64__)</span></span><br><span class="line">    offsetFromHelperMethod = <span class="number">0x12</span>;</span><br><span class="line"><span class="meta">#endif</span></span><br><span class="line">    <span class="keyword">return</span> offsetFromHelperMethod;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<ul class="ui list">
+<li>&#x6839;&#x636E;&#x6307;&#x4EE4;&#x5730;&#x5740;&#x53D6;&#x6B64;&#x6307;&#x4EE4;&#x7684;&#x5185;&#x5B58;&#x5185;&#x5BB9;&#xFF0C;&#x8FDB;&#x884C;decode&#xFF0C;&#x5F97;&#x5230;dlsym&#x76EE;&#x6807;&#x5730;&#x5740;&#x76F8;&#x5BF9;&#x4E8E;bl/call&#x6307;&#x4EE4;IP&#x7684;&#x504F;&#x79FB;&#xFF0C;&#x5E76;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x5E73;&#x53F0;&#x7684;&#x6362;&#x7B97;&#x65B9;&#x5F0F;&#x7B97;&#x51FA;dlsym&#x7684;&#x76EE;&#x6807;&#x5730;&#x5740;&#xFF08;&#x6B64;&#x5B9E;&#x73B0;&#x4F9D;&#x8D56;&#x4E8E;&#x4E0D;&#x540C;&#x5E73;&#x53F0;&#x4E0A;&#x76F8;&#x5E94;&#x7684;bl/call&#x6307;&#x4EE4;&#x7684;&#x5B9E;&#x73B0;&#xFF09;</li>
+</ul>
+<p>&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">SYM_FUNC_POINTER_TYPE get_dlsym_addr() {</span><br><span class="line">    int64_t func = (int64_t)&amp;helper_method + getOffsetFromHelperMethod();</span><br><span class="line">    int64_t relative_offset = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line"><span class="meta">#if defined(__aarch64__)</span></span><br><span class="line">    <span class="comment">//arm64</span></span><br><span class="line">    uint32_t inst = *(uint32_t *)func;</span><br><span class="line">    uint32_t imm = fieldFromInstruction_4(inst, <span class="number">0</span>, <span class="number">26</span>);</span><br><span class="line">    relative_offset = SignExtend64(imm, <span class="number">26</span>) * <span class="number">4</span>;</span><br><span class="line"><span class="meta">#elif defined(__arm__)</span></span><br><span class="line">    <span class="comment">//armv7</span></span><br><span class="line">    uint32_t inst = *(uint32_t *)func;</span><br><span class="line">    <span class="keyword">unsigned</span> imm = fieldFromInstruction_4(inst, <span class="number">0</span>, <span class="number">24</span>) &lt;&lt; <span class="number">2</span>;</span><br><span class="line">    relative_offset = SignExtend32(imm, <span class="number">26</span>) + <span class="number">8</span>;</span><br><span class="line"><span class="meta">#elif defined(__i386__) || defined(__x86_64__)</span></span><br><span class="line">    <span class="comment">//simulator</span></span><br><span class="line">    uint32_t imm = <span class="number">0</span>;</span><br><span class="line">    memcpy(&amp;imm, (<span class="keyword">void</span> *)(func+<span class="number">1</span>), <span class="number">4</span>);</span><br><span class="line">    relative_offset = SignExtend32(imm, <span class="number">32</span>)+<span class="number">5</span>; <span class="comment">//5&#x4E3A;&#x6B64;call&#x6307;&#x4EE4;&#x7684;&#x957F;&#x5EA6;&#xFF0C;&#x76EE;&#x6807;&#x5730;&#x5740;&#x662F;&#x57FA;&#x4E8E;&#x4E0B;&#x6761;&#x6307;&#x4EE4;&#x7684;&#x5730;&#x5740;</span></span><br><span class="line"><span class="meta">#endif    </span></span><br><span class="line">    </span><br><span class="line">    func += relative_offset;</span><br><span class="line">    <span class="keyword">return</span> (SYM_FUNC_POINTER_TYPE)func;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>&#x4F8B;&#xFF1A;&#x4E0A;&#x4F8B;&#x4E2D;&#x6307;&#x4EE4;&#x5185;&#x5BB9;&#x4E3A;<code>0x13010094</code>&#xFF0C;&#x6309;&#x5B57;&#x8282;&#x5E8F;&#x4E3A;<code>0x94000113</code>&#xFF0C;&#x5176;&#x4E8C;&#x8FDB;&#x5236;&#x4E3A;:<br><a class="magnific-img" href="/pics/arm64_bl_dlsym_example.png"><img src="/pics/arm64_bl_dlsym_example.png" alt="arm64_bl_dlsym_example" class="ui centered image"></a><br>arm64&#x5E73;&#x53F0;bl&#x6307;&#x4EE4;&#x7684;&#x683C;&#x5F0F;&#x4E3A;&#xFF1A;<br><a class="magnific-img" href="/pics/arm64_bl_instruction.png"><img src="/pics/arm64_bl_instruction.png" alt="arm64_bl_instruction" class="ui centered image"></a><br>&#x5F97;&#x5230;&#x5176;pc relative offset&#x4E3A;<code>0x113 * 4 = 0x44c</code>&#xFF0C;&#x5219; dlsym&#x7684;&#x5730;&#x5740;=<code>0x100006458</code> + <code>0x44c</code></p>
+</blockquote>
+<ul class="ui list">
+<li>&#x5F97;&#x5230;dlsym&#x7684;&#x5730;&#x5740;&#x540E;&#xFF0C;&#x5373;&#x53EF;&#x901A;&#x8FC7;&#x5BF9;&#x5176;&#x4F20;&#x5165;&#x51FD;&#x6570;&#x540D;&#x5F97;&#x5230;&#x5176;&#x4ED6;c&#x65B9;&#x6CD5;&#x5730;&#x5740;</li>
+</ul>
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:34:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Dtrace/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    dtrace
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Debugger-and-Anti-debugging/" class="ui tiny button">
+                    
+                    Debugger &amp; Anti-debugging
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>NSURLSession background session details | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="&amp;#x82F9;&amp;#x679C;&amp;#x5458;&amp;#x5DE5;&amp;#x8BC4;&amp;#x8BBA;&amp;#xFF1A; Latest reply: Aug 18, 2015 4:49 AM by eskimo Apple Staff (8,640 points) eskimoAug 18, 2015 4:49 AM When writing an app that uses NSURLSession&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSURLSession background session details">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/NSURLSession-background-session/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="&amp;#x82F9;&amp;#x679C;&amp;#x5458;&amp;#x5DE5;&amp;#x8BC4;&amp;#x8BBA;&amp;#xFF1A; Latest reply: Aug 18, 2015 4:49 AM by eskimo Apple Staff (8,640 points) eskimoAug 18, 2015 4:49 AM When writing an app that uses NSURLSession&amp;#">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.928Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NSURLSession background session details">
+<meta name="twitter:description" content="&amp;#x82F9;&amp;#x679C;&amp;#x5458;&amp;#x5DE5;&amp;#x8BC4;&amp;#x8BBA;&amp;#xFF1A; Latest reply: Aug 18, 2015 4:49 AM by eskimo Apple Staff (8,640 points) eskimoAug 18, 2015 4:49 AM When writing an app that uses NSURLSession&amp;#">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-NSURLSession-background-session" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    NSURLSession background session details
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <p>&#x82F9;&#x679C;&#x5458;&#x5DE5;&#x8BC4;&#x8BBA;&#xFF1A;</p>
+<p>Latest reply: Aug 18, 2015 4:49 AM by eskimo</p>
+<p>Apple Staff (8,640 points)</p>
+<p>eskimoAug 18, 2015 4:49 AM</p>
+<p>When writing an app that uses NSURLSession&#x2019;s background session support, it&#x2019;s easy to get confused by three non-obvious artefacts of the development process:</p>
+<ul class="ui list">
+<li>When you run your app from Xcode, Xcode installs the app in a new container, meaning that the path to your app changes.  This can confuse NSURLSession&#x2019;s background session support.</li>
+</ul>
+<p>Note This problem was fixed in iOS 9; if you encounter a problem with NSURLSession not handling a container path change in iOS 9 or later, please file a bug.</p>
+<ul class="ui list">
+<li><p>Xcode&#x2019;s debugging prevents the system from suspending your app.  So, if you run your app from Xcode, or you attach to the process some time after launch, and then move your app into the background, your app will continue executing in situations where the system would otherwise have suspended it.</p>
+</li>
+<li><p>Similarly, the iOS Simulator does not accurately simulate app suspend and resume; this has worked in the past but it does not work in the iOS 8 or iOS 9 simulators (r. 16532261).</p>
+</li>
+</ul>
+<p>When doing in-depth testing of NSURLSession background sessions I recommend that you test on a real device, running your app from the Home screen rather than running it from Xcode.  This avoids all of the issues described above, resulting in a run-time environment that&#x2019;s much closer to what your users will see.</p>
+<p>If you encounter problems that you need to debug, you have two options:</p>
+<ul class="ui list">
+<li>use logging &#x2014; It&#x2019;s important that your app have good logging support anyway, because otherwise it&#x2019;ll be impossible to debug problems that only crop up in the field.  Once you&#x2019;ve taken the time to create this logging, you can use it to debug problems during development.</li>
+<li>attach &#x2014; If you have a specific problem that you must investigate with the debugger, you can run your app from the Home screen and then attach to the running process (via Xcode&#x2019;s Debug &gt; Attach to Process command) or use Wait for executable to be launched in the Info tab of the scheme editor.</li>
+</ul>
+<p><strong>IMPORTANT</strong> As mentioned above, the debugger prevents your app from suspending.  If that&#x2019;s a problem, you can always detach and then reattach later on.</p>
+<p>Finally, while bringing up a feature it&#x2019;s often useful to start from a clean slate on launch; this prevents tasks from a previous debugging session from confusing the current debugging session.  You have a couple of options here:</p>
+<ul class="ui list">
+<li>If you&#x2019;re developing on the simulator, iOS Simulator &gt; Reset Content and Settings is the quickest way to wipe the slate completely clean.</li>
+<li>On both the simulator and a real device, you can delete your app.  This will not only remove the app and everything in the app&#x2019;s container, but will also remove any background sessions created by the app.</li>
+<li>You can also take advantage of NSURLSession&#x2019;s -invalidateAndCancel method, which will cancel any running tasks and then invalidate the session.  There&#x2019;s a few ways to use this:<ul>
+<li>During active development it might make sense for your app to call this on launch, guaranteeing that you start with a clean slate.</li>
+<li>Alternatively, you could keep track of your app&#x2019;s install path and call it on launch if the install path has changed.</li>
+<li>You could have a hidden UI that invalidates the session.  This is helpful when you encounter a problem and want to know whether it&#x2019;s caused by some problem with the NSURLSession persistent state.</li>
+</ul>
+</li>
+</ul>
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:44:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Objective-C-related/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    Objective C related
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Networking/" class="ui tiny button">
+                    
+                    Networking
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

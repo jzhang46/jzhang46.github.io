@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>File related | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="1. 禁用 Unified Buffer Cache (UBC)12//禁用 Unified Buffer Cache (UBC), 需要保证文件之前不在cache中，否则还是会用cachefcntl(fd, F_NOCACHE, 1)  F_GLOBAL_NOCACHE是直接将所有对此文件的访问都置为NO cache，但好像现在行为是跟F_NOCACHE是一样的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="File related">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/File-related/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="1. 禁用 Unified Buffer Cache (UBC)12//禁用 Unified Buffer Cache (UBC), 需要保证文件之前不在cache中，否则还是会用cachefcntl(fd, F_NOCACHE, 1)  F_GLOBAL_NOCACHE是直接将所有对此文件的访问都置为NO cache，但好像现在行为是跟F_NOCACHE是一样的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.927Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="File related">
+<meta name="twitter:description" content="1. 禁用 Unified Buffer Cache (UBC)12//禁用 Unified Buffer Cache (UBC), 需要保证文件之前不在cache中，否则还是会用cachefcntl(fd, F_NOCACHE, 1)  F_GLOBAL_NOCACHE是直接将所有对此文件的访问都置为NO cache，但好像现在行为是跟F_NOCACHE是一样的。">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-File-related" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    File related
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <h3 id="1-&#x7981;&#x7528;-Unified-Buffer-Cache-UBC"><a href="#1-&#x7981;&#x7528;-Unified-Buffer-Cache-UBC" class="headerlink" title="1. &#x7981;&#x7528; Unified Buffer Cache (UBC)"></a>1. &#x7981;&#x7528; Unified Buffer Cache (UBC)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//&#x7981;&#x7528; Unified Buffer Cache (UBC), &#x9700;&#x8981;&#x4FDD;&#x8BC1;&#x6587;&#x4EF6;&#x4E4B;&#x524D;&#x4E0D;&#x5728;cache&#x4E2D;&#xFF0C;&#x5426;&#x5219;&#x8FD8;&#x662F;&#x4F1A;&#x7528;cache</span><br><span class="line">fcntl(fd, F_NOCACHE, 1)</span><br></pre></td></tr></table></figure>
+
+<p><code>F_GLOBAL_NOCACHE</code>&#x662F;&#x76F4;&#x63A5;&#x5C06;&#x6240;&#x6709;&#x5BF9;&#x6B64;&#x6587;&#x4EF6;&#x7684;&#x8BBF;&#x95EE;&#x90FD;&#x7F6E;&#x4E3A;NO cache&#xFF0C;&#x4F46;&#x597D;&#x50CF;&#x73B0;&#x5728;&#x884C;&#x4E3A;&#x662F;&#x8DDF;<code>F_NOCACHE</code>&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;</p>
+<a id="more"></a>
+
+<p>&#x539F;&#x8D34;&#x5730;&#x5740;&#xFF1A;<br><a href="https://forums.developer.apple.com/thread/25464" target="_blank" rel="noopener">https://forums.developer.apple.com/thread/25464</a></p>
+<p>&#x82F9;&#x679C;&#x5458;&#x5DE5;&#x8BC4;&#x8BBA;&#xFF1A;</p>
+<blockquote>
+<p>eskimoNov 9, 2015 1:02 AM(in response to Ken Thomases)</p>
+<blockquote>
+<p>I belive that F_NOCACHE prevents the file&#x2019;s data from being added to the cache if it&#x2019;s not already there.  However, if it&#x2019;s already in the cache, the cache will be used for reading.</p>
+</blockquote>
+<p>That&#x2019;s correct.  If things didn&#x2019;t behave that way then the file system would be inconsistent depending on whether you set F_NOCACHE or not, which would be a bit of a nightmare (especially when you consider memory mappings).<br>Some things to keep in mind while testing:</p>
+<ul class="ui list">
+<li>Set F_NOCACHE on your writes as well as your reads.</li>
+<li>For each round of testing, deleting the file before you start.  That guarantees that no remnants of that file will remaining in the cache.</li>
+<li>F_NOCACHE has implementation restrictions that can cause it to end up using the cache.  To increase the chances of that not happening, do the following:</li>
+<li>use a page aligned buffer (valloc is your friend)</li>
+<li>make your I/O length a multiple of the page size</li>
+<li>make your I/O offset (that is, the offset into the file) a multiple of the page size<br>Finally, be aware that F_NOCACHE is a hint, not an absolute requirement, and there are circumstances under which it will use the cache, and those circumstances can change from release to release.</li>
+</ul>
+<blockquote>
+<p>If one wanted to write a form of IO benchmarking program, where you are trying to measure the hardware-centric not-host-buffered IO performance, what system calls would be used?</p>
+</blockquote>
+<p>F_NOCACHE works fine for that (or it did the last time I tested it, which was quite some time ago).  There are two things to watch out for:</p>
+<ul class="ui list">
+<li>You have to make sure that the file you&#x2019;re interacting doesn&#x2019;t get into the cache.  The easiest way to do that is to create your own test file and write to it with non-cached I/O.  You can test whether this is working as expected using mincore.</li>
+<li>You need to watch out for the file being discontiguous.  F_PREALLOCATE can help with that</li>
+</ul>
+</blockquote>
+<h3 id="2-Temp-file-creation-&#x751F;&#x6210;&#x4E34;&#x65F6;&#x6587;&#x4EF6;"><a href="#2-Temp-file-creation-&#x751F;&#x6210;&#x4E34;&#x65F6;&#x6587;&#x4EF6;" class="headerlink" title="2. Temp file creation &#x751F;&#x6210;&#x4E34;&#x65F6;&#x6587;&#x4EF6;"></a>2. Temp file creation &#x751F;&#x6210;&#x4E34;&#x65F6;&#x6587;&#x4EF6;</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *templateStr = [<span class="built_in">NSTemporaryDirectory</span>() stringByAppendingPathComponent: <span class="string">@&quot;live_crash_report.XXXXXX&quot;</span>];</span><br><span class="line"><span class="keyword">char</span> *path = strdup([templateStr fileSystemRepresentation]);</span><br><span class="line">    </span><br><span class="line"><span class="keyword">int</span> fd = mkstemp(path); <span class="comment">//&#x53D6;&#x968F;&#x673A;&#x6570;&#x586B;&#x5145;XXXXXX&#xFF0C;&#x751F;&#x6210;&#x4E34;&#x65F6;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x5E76;&#x4EE5;mode 0600 &#x6253;&#x5F00;</span></span><br><span class="line"><span class="keyword">if</span> (fd &lt; <span class="number">0</span>) {</span><br><span class="line">        plcrash_populate_posix_error(outError, errno, <span class="built_in">NSLocalizedString</span>(<span class="string">@&quot;Failed to create temporary path&quot;</span>, <span class="string">@&quot;Error opening temporary output path&quot;</span>));</span><br><span class="line">        free(path);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:36:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/GCD-notes/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    GCD notes
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Dtrace/" class="ui tiny button">
+                    
+                    dtrace
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

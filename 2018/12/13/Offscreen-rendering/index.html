@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Offscreen rendering | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="Offscreen rendering CPU: write bits in a bitmap buffer, draw with CPU, happen in app process, 不是一般说的离屏渲染  CoreGraphics drawing (any class prefixed with CG*) drawing with CoreText drawRect   GPU: perfo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Offscreen rendering">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Offscreen-rendering/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="Offscreen rendering CPU: write bits in a bitmap buffer, draw with CPU, happen in app process, 不是一般说的离屏渲染  CoreGraphics drawing (any class prefixed with CG*) drawing with CoreText drawRect   GPU: perfo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.930Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Offscreen rendering">
+<meta name="twitter:description" content="Offscreen rendering CPU: write bits in a bitmap buffer, draw with CPU, happen in app process, 不是一般说的离屏渲染  CoreGraphics drawing (any class prefixed with CG*) drawing with CoreText drawRect   GPU: perfo">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Offscreen-rendering" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Offscreen rendering
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <h3 id="Offscreen-rendering"><a href="#Offscreen-rendering" class="headerlink" title="Offscreen rendering"></a>Offscreen rendering</h3><ul class="ui list">
+<li><p>CPU: write bits in a bitmap buffer, draw with CPU, happen in app process, &#x4E0D;&#x662F;&#x4E00;&#x822C;&#x8BF4;&#x7684;&#x79BB;&#x5C4F;&#x6E32;&#x67D3;</p>
+<ul>
+<li>CoreGraphics drawing (any class prefixed with CG*)</li>
+<li>drawing with CoreText</li>
+<li><code>drawRect</code></li>
+</ul>
+</li>
+<li><p>GPU: performed via GPU, happend in render server process</p>
+<ul>
+<li><p>CALayers with a <code>shouldRasterize</code> property set to YES</p>
+<ul>
+<li>has caching (see below)</li>
+</ul>
+</li>
+<li><p>CALayers using masks (<code>setMasksToBounds</code>) and dynamic shadows (<code>setShadow*</code>)</p>
+</li>
+<li><p>Group opacity (<code>UIViewGroupOpacity</code>)</p>
+</li>
+<li><p>CALayers with corner radius</p>
+<p>Performance penalty: context switch from on-screen drawing to off-screen drawing</p>
+</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+<blockquote>
+<p>&#x539F;&#x8D34;&#xFF1A;<br><a href="https://robots.thoughtbot.com/designing-for-ios-graphics-performance" target="_blank" rel="noopener">https://robots.thoughtbot.com/designing-for-ios-graphics-performance</a></p>
+<p>&#x82F9;&#x679C;&#x5458;&#x5DE5;&#x8BC4;&#x8BBA;&#xFF1A;</p>
+<p>[The] advice as far as the button is good here, but I&#x2019;ve got one small correction and some bonus explanation for interested readers.</p>
+<p>I&#x2019;d like to clarify a few points about offscreen drawing as described in this post. While your list of cases which might elicit offscreen drawing is accurate, there are two grossly different mechanisms being triggered by elements of this list (each with different performance characteristics), and it&#x2019;s possible that a single view will require both. Those two mechanisms have very different performance considerations.</p>
+<p>In particular, a few (implementing drawRect and doing any CoreGraphics drawing, drawing with CoreText [which is just using CoreGraphics]) are indeed &#x201C;offscreen drawing,&#x201D; but they&#x2019;re not what we usually mean when we say that. They&#x2019;re very different from the rest of the list. When you implement drawRect or draw with CoreGraphics, you&#x2019;re using the CPU to draw, and that drawing will happen synchronously within your application. You&#x2019;re just calling some function which writes bits in a bitmap buffer, basically.</p>
+<p>The other forms of offscreen drawing happen on your behalf in the render server (a separate process) and are performed via the GPU (not via the CPU, as suggested in the previous paragraph). <strong>When the OpenGL renderer goes to draw each layer, it may have to stop for some subhierarchies and composite them into a single buffer. You&#x2019;d think the GPU would always be faster than the CPU at this sort of thing, but there are some tricky considerations here. It&#x2019;s expensive for the GPU to switch contexts from on-screen to off-screen drawing (it must flush its pipelines and barrier), so for simple drawing operations, the setup cost may be greater than the total cost of doing the drawing in CPU via e.g. CoreGraphics would have been. So if you&#x2019;re trying to deal with a complex hierarchy and are deciding whether it&#x2019;s better to use &#x2013;[CALayer setShouldRasterize:] or to draw a hierarchy&#x2019;s contents via CG, the only way to know is to test and measure.</strong></p>
+<p>You could certainly end up doing two off-screen passes if you draw via CG within your app and display that image in a layer which requires offscreen rendering. For instance, if you take a screenshot via &#x2013;[CALayer renderInContext:] and then put that screenshot in a layer with a shadow.</p>
+<p>Also: the considerations for shouldRasterize are very different from masking, shadows, edge antialiasing, and group opacity. If any of the latter are triggered, there&#x2019;s no caching, and offscreen drawing will happen on every frame; rasterization does indeed require an offscreen drawing pass, but so long as the rasterized layer&#x2019;s sublayers aren&#x2019;t changing, that rasterization will be cached and repeated on each frame. And of course, if you&#x2019;re using drawRect: or drawing yourself via CG, you&#x2019;re probably caching locally. More on this in &#x201C;Polishing Your Rotation Animations,&#x201D; WWDC 2012.</p>
+<p>Speaking of caching: if you&#x2019;re doing a lot of this kind of drawing all over your application, you may need to implement cache-purging behavior for all these (probably large) images you&#x2019;re going to have sitting around on your application&#x2019;s heap. If you get a low memory warning, and some of these images are not actively being used, it may be best for you to get rid of those stretchable images you drew (and lazily regenerate them when needed). But that may end up just making things worse, so testing is required there too.</p>
+</blockquote>
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:46:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Thread-and-Locks/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    Threads &amp; Locks
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Objective-C-related/" class="ui tiny button">
+                    
+                    Objective C related
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

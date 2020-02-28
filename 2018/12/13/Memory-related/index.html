@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Memory related | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="Apple A10 cpu cache size:  L1 cache: 64KB per-core, one for data and  one for instructions L2 cache: 3MB, shared by both CPU cores L3 cache: 4MB   MAC&amp;#x4E0A;&amp;#x5185;&amp;#x5B58;&amp;#x76F8;&amp;#x5173;&amp;#x547D;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Memory related">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Memory-related/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="Apple A10 cpu cache size:  L1 cache: 64KB per-core, one for data and  one for instructions L2 cache: 3MB, shared by both CPU cores L3 cache: 4MB   MAC&amp;#x4E0A;&amp;#x5185;&amp;#x5B58;&amp;#x76F8;&amp;#x5173;&amp;#x547D;&amp;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.928Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Memory related">
+<meta name="twitter:description" content="Apple A10 cpu cache size:  L1 cache: 64KB per-core, one for data and  one for instructions L2 cache: 3MB, shared by both CPU cores L3 cache: 4MB   MAC&amp;#x4E0A;&amp;#x5185;&amp;#x5B58;&amp;#x76F8;&amp;#x5173;&amp;#x547D;&amp;">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Memory-related" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Memory related
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <ul class="ui list">
+<li><p>Apple A10 cpu cache size:</p>
+<ul>
+<li>L1 cache: 64KB per-core, one for data and  one for instructions</li>
+<li>L2 cache: 3MB, shared by both CPU cores</li>
+<li>L3 cache: 4MB</li>
+</ul>
+</li>
+<li><p>MAC&#x4E0A;&#x5185;&#x5B58;&#x76F8;&#x5173;&#x547D;&#x4EE4;</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//&#x5F97;&#x5230;&#x5F53;&#x524D;heap&#x4E0A;&#x6240;&#x6709;&#x5BF9;&#x8C61;&#x7684;&#x7C7B;&#x578B;&#x3001;&#x5927;&#x5C0F;&#x53CA;&#x5176;&#x76F8;&#x5E94;&#x5730;&#x5740;&#x7B49;</span><br><span class="line"><span class="variable">$heap</span> -showSizes &lt;pid&gt;                //<span class="built_in">print</span> all object <span class="built_in">type</span> and sizes</span><br><span class="line"><span class="variable">$heap</span> -address=all &lt;pid&gt;               //<span class="built_in">print</span> all objects <span class="keyword">in</span> heap and their addresses</span><br><span class="line"></span><br><span class="line">//&#x5F97;&#x5230;&#x8FDB;&#x7A0B;&#x751F;&#x547D;&#x5468;&#x671F;&#x5185;&#x6240;&#x6709;&#x7684;&#x5185;&#x5B58;&#x5206;&#x914D;&#x4E8B;&#x4EF6;&#x3001;&#x8C03;&#x7528;&#x6808;</span><br><span class="line"><span class="variable">$malloc_history</span> -allEvents &lt;pid&gt;     //<span class="built_in">print</span> all ALLOC/FREE events, including call stack</span><br><span class="line"><span class="variable">$malloc_history</span> -callTree -collapseRecursion &lt;pid&gt;     //<span class="built_in">print</span> memory alloc call trees</span><br><span class="line"><span class="variable">$malloc_history</span> &lt;pid&gt; &lt;address&gt;   //<span class="built_in">print</span> the ALLOC/FREE event of the &lt;address&gt;, including call stack</span><br><span class="line"></span><br><span class="line">//&#x5F97;&#x5230;&#x5F53;&#x524D;&#x5185;&#x5B58;&#x4E2D;&#x6240;&#x6709;object&#x7533;&#x8BF7;&#x65F6;&#x7684;call stack</span><br><span class="line"><span class="variable">$vmmap</span> -v -stacks &lt;pid&gt;               //<span class="built_in">print</span> all call stacks of all objects <span class="keyword">in</span> the heap</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:41:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Networking-in-short-lived-extension/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    Networking in short lived extension
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Macro-tricks/" class="ui tiny button">
+                    
+                    Macro tricks
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

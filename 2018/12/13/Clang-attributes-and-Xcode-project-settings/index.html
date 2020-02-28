@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Clang attributes &amp; Xcode project settings | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="忽略Warning “Unknown attribute ‘xxx’ ignored”123456789101112131415161718#pragma clang diagnostic push#pragma clang diagnostic ignored &quot;-Wattributes&quot;//code#pragma clang diagnostic pop//定义宏里面用到#pragma时需要用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clang attributes &amp; Xcode project settings">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Clang-attributes-and-Xcode-project-settings/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="忽略Warning “Unknown attribute ‘xxx’ ignored”123456789101112131415161718#pragma clang diagnostic push#pragma clang diagnostic ignored &quot;-Wattributes&quot;//code#pragma clang diagnostic pop//定义宏里面用到#pragma时需要用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.927Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Clang attributes &amp; Xcode project settings">
+<meta name="twitter:description" content="忽略Warning “Unknown attribute ‘xxx’ ignored”123456789101112131415161718#pragma clang diagnostic push#pragma clang diagnostic ignored &quot;-Wattributes&quot;//code#pragma clang diagnostic pop//定义宏里面用到#pragma时需要用">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Clang-attributes-and-Xcode-project-settings" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Clang attributes &amp; Xcode project settings
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <h3 id="&#x5FFD;&#x7565;Warning-&#x201C;Unknown-attribute-&#x2018;xxx&#x2019;-ignored&#x201D;"><a href="#&#x5FFD;&#x7565;Warning-&#x201C;Unknown-attribute-&#x2018;xxx&#x2019;-ignored&#x201D;" class="headerlink" title="&#x5FFD;&#x7565;Warning &#x201C;Unknown attribute &#x2018;xxx&#x2019; ignored&#x201D;"></a>&#x5FFD;&#x7565;Warning &#x201C;Unknown attribute &#x2018;xxx&#x2019; ignored&#x201D;</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#pragma clang diagnostic push</span></span><br><span class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">&quot;-Wattributes&quot;</span></span></span><br><span class="line"><span class="comment">//code</span></span><br><span class="line"><span class="meta">#pragma clang diagnostic pop</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//&#x5B9A;&#x4E49;&#x5B8F;&#x91CC;&#x9762;&#x7528;&#x5230;#pragma&#x65F6;&#x9700;&#x8981;&#x7528;_Pragma(&quot;&quot;)&#x6765;&#x4EE3;&#x66FF;&#xFF1A;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#define OCPACK_BEGIN    \</span></span><br><span class="line">_Pragma(<span class="string">&quot;clang diagnostic push&quot;</span>)    \</span><br><span class="line">_Pragma(<span class="string">&quot;clang diagnostic ignored \&quot;-Wattributes\&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">#define OCPACK_END  \</span></span><br><span class="line">_Pragma(<span class="string">&quot;clang diagnostic pop&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">#define OCPACK_METHOD \</span></span><br><span class="line">__attribute__((ocslite))</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3 id="&#x9519;&#x8BEF;&#x89E3;&#x51B3;&#xFF1A;Cannot-specify-o-when-generating-multiple-output-files"><a href="#&#x9519;&#x8BEF;&#x89E3;&#x51B3;&#xFF1A;Cannot-specify-o-when-generating-multiple-output-files" class="headerlink" title="&#x9519;&#x8BEF;&#x89E3;&#x51B3;&#xFF1A;Cannot specify -o when generating multiple output files"></a>&#x9519;&#x8BEF;&#x89E3;&#x51B3;&#xFF1A;Cannot specify -o when generating multiple output files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Showing All Errors Only</span><br><span class="line">Cannot specify -o when generating multiple output files</span><br><span class="line"></span><br><span class="line">&#x89E3;&#x51B3;&#x529E;&#x6CD5;&#xFF1A;</span><br><span class="line">Build setting&#x4E2D;&#x7684; Enable Index-While-Building Functionality &#x8BBE;&#x7F6E;&#x4E3A;NO</span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x9519;&#x8BEF;&#x89E3;&#x51B3;&#xFF1A;xcode9-&#x8F93;&#x51FA;&#x7684;SDK&#xFF0C;xcode8&#x65E0;&#x6CD5;&#x96C6;&#x6210;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;"><a href="#&#x9519;&#x8BEF;&#x89E3;&#x51B3;&#xFF1A;xcode9-&#x8F93;&#x51FA;&#x7684;SDK&#xFF0C;xcode8&#x65E0;&#x6CD5;&#x96C6;&#x6210;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;" class="headerlink" title="&#x9519;&#x8BEF;&#x89E3;&#x51B3;&#xFF1A;xcode9 &#x8F93;&#x51FA;&#x7684;SDK&#xFF0C;xcode8&#x65E0;&#x6CD5;&#x96C6;&#x6210;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;"></a>&#x9519;&#x8BEF;&#x89E3;&#x51B3;&#xFF1A;xcode9 &#x8F93;&#x51FA;&#x7684;SDK&#xFF0C;xcode8&#x65E0;&#x6CD5;&#x96C6;&#x6210;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x5F53;&#x4F4E;&#x7248;&#x672C;&#x7684;xcode&#x96C6;&#x6210;&#x9AD8;&#x7248;&#x672C;&#x7684;&#x9759;&#x6001;&#x5E93;&#x65F6;&#xFF0C;&#x4F1A;&#x63D0;&#x793A;&#xFF1A;Xcode Framework not found FileProvider for architecture x86_64/arm64 </span><br><span class="line"></span><br><span class="line">&#x65B9;&#x6CD5;&#x4E00;&#xFF1A; </span><br><span class="line"></span><br><span class="line">&#x4F9D;&#x7136;&#x4F7F;&#x7528;&#x9AD8;&#x7248;&#x672C;&#x65B9;&#x6CD5;&#x8F93;&#x51FA;SDK </span><br><span class="line"></span><br><span class="line">SDK&#x65B9;&#xFF1A; </span><br><span class="line"></span><br><span class="line">1&#x3001;Build Settings &#x4E2D; Link Frameworks Automatically &#x628A;&#x9ED8;&#x8BA4;Yes &#x6539;&#x6210; No!  </span><br><span class="line"></span><br><span class="line">2&#x3001;Build Phases &#x4E2D;Link Binary With Libraries &#x6DFB;&#x52A0;&#x5BF9;&#x5E94;&#x7684;Lib </span><br><span class="line"></span><br><span class="line">&#x63A5;&#x5165;&#x65B9;&#xFF1A; </span><br><span class="line"></span><br><span class="line">3&#x3001;&#x8981;&#x6C42;&#x63A5;&#x4E5F;&#x5728;Build Phases &#x4E2D;Link Binary With Libraries &#x6DFB;&#x52A0;&#x5BF9;&#x5E94;&#x7684;Lib</span><br><span class="line">&#x65B9;&#x6CD5;&#x4E8C;&#xFF1A; </span><br><span class="line"></span><br><span class="line">SDK&#x65B9;&#x7528;&#x4F4E;&#x7248;&#x672C;&#x7684;xcode&#x8F93;&#x51FA;SDK</span><br><span class="line">&#x65B9;&#x6CD5;&#x4E09;&#xFF1A; </span><br><span class="line"></span><br><span class="line">&#x63A5;&#x5165;&#x65B9;&#x7528;&#x9AD8;&#x7248;&#x672C;&#x7684;xcode&#x96C6;&#x6210;</span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x4F4E;&#x7248;&#x672C;iOS&#x4E0A;&#x8C03;&#x7528;&#x9AD8;&#x7248;&#x672C;API&#x7684;&#x68C0;&#x67E5;"><a href="#&#x4F4E;&#x7248;&#x672C;iOS&#x4E0A;&#x8C03;&#x7528;&#x9AD8;&#x7248;&#x672C;API&#x7684;&#x68C0;&#x67E5;" class="headerlink" title="&#x4F4E;&#x7248;&#x672C;iOS&#x4E0A;&#x8C03;&#x7528;&#x9AD8;&#x7248;&#x672C;API&#x7684;&#x68C0;&#x67E5;"></a>&#x4F4E;&#x7248;&#x672C;iOS&#x4E0A;&#x8C03;&#x7528;&#x9AD8;&#x7248;&#x672C;API&#x7684;&#x68C0;&#x67E5;</h3><p>iOS&#x4EE3;&#x7801;&#x4E2D;&#x7ECF;&#x5E38;&#x4F1A;&#x51FA;&#x73B0;&#x8FD9;&#x6837;&#x7684;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ul class="ui list">
+<li>&#x5DE5;&#x7A0B;&#x7684;target&#x662F;iOS 8</li>
+<li>&#x4EE3;&#x7801;&#x4E2D;&#x53EF;&#x80FD;&#x6709;&#x8C03;&#x7528;iOS 10&#x7684;API</li>
+</ul>
+<p>&#x7406;&#x8BBA;&#x4E0A;&#x5728;&#x6240;&#x6709;&#x8C03;&#x7528;iOS 10&#x7684;API&#x65F6;&#x5E94;&#x5224;&#x65AD;&#x6B64;API&#x662F;&#x5426;available</p>
+<ul class="ui list">
+<li>&#x4F46;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x5FD8;</li>
+</ul>
+<p>&#x7F16;&#x8BD1;&#x5668;&#x652F;&#x6301;&#x4E00;&#x4E2A;warning flag: <code>-Wpartial-availability</code>&#x6765;&#x68C0;&#x6D4B;&#x5230;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;</p>
+<p>build&#x540E;&#x4F1A;&#x51FA;&#x73B0;&#x7684;warning:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;xxxxx&apos; is only avaialble on iOS 9.0 or newer</span><br><span class="line">&apos;xxxxx&apos; has been explicitly marked partial here</span><br></pre></td></tr></table></figure>
+
+<p>&#x5F00;&#x53D1;&#x4FEE;&#x6539;&#x5B8C;&#x540E;&#x53EF;&#x7528;#pragma&#x6765;suppress&#x6389;&#x76F8;&#x5E94;&#x7684;warning</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#pragma clang diagnostic push</span></span><br><span class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">&quot;-Wpartial-availability&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//code</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#pragma clang diagnostic pop</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x6307;&#x5B9A;Objective-C&#x53D8;&#x91CF;&#x4E0D;&#x88AB;&#x63D0;&#x524D;release&#x7684;attribute"><a href="#&#x6307;&#x5B9A;Objective-C&#x53D8;&#x91CF;&#x4E0D;&#x88AB;&#x63D0;&#x524D;release&#x7684;attribute" class="headerlink" title="&#x6307;&#x5B9A;Objective-C&#x53D8;&#x91CF;&#x4E0D;&#x88AB;&#x63D0;&#x524D;release&#x7684;attribute"></a>&#x6307;&#x5B9A;Objective-C&#x53D8;&#x91CF;&#x4E0D;&#x88AB;&#x63D0;&#x524D;release&#x7684;attribute</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Mark local variables of type &apos;id&apos; or pointer-to-ObjC-object-type so that values stored into that local variable are not aggressively released by the compiler during optimization, but are held until either the variable is assigned to again, or the end of the scope (such as a compound statement, or method definition) of the local variable.</span></span><br><span class="line"><span class="meta">#ifndef NS_VALID_UNTIL_END_OF_SCOPE</span></span><br><span class="line"><span class="meta">#if __has_attribute(objc_precise_lifetime)</span></span><br><span class="line"><span class="meta">#define NS_VALID_UNTIL_END_OF_SCOPE __attribute__((objc_precise_lifetime))</span></span><br><span class="line"><span class="meta">#else</span></span><br><span class="line"><span class="meta">#define NS_VALID_UNTIL_END_OF_SCOPE</span></span><br><span class="line"><span class="meta">#endif</span></span><br><span class="line"><span class="meta">#endif</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x53D8;&#x91CF;&#x4F5C;&#x7528;&#x57DF;&#x65F6;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x6307;&#x5B9A;&#x65B9;&#x6CD5;"><a href="#&#x53D8;&#x91CF;&#x4F5C;&#x7528;&#x57DF;&#x65F6;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x6307;&#x5B9A;&#x65B9;&#x6CD5;" class="headerlink" title="&#x53D8;&#x91CF;&#x4F5C;&#x7528;&#x57DF;&#x65F6;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x6307;&#x5B9A;&#x65B9;&#x6CD5;"></a>&#x53D8;&#x91CF;&#x4F5C;&#x7528;&#x57DF;&#x65F6;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x6307;&#x5B9A;&#x65B9;&#x6CD5;</h3><p><code>__attribute__((cleanup(...)))</code>&#xFF0C;&#x7528;&#x4E8E;&#x4FEE;&#x9970;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x5728;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x7ED3;&#x675F;&#x65F6;&#x53EF;&#x4EE5;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x6307;&#x5B9A;&#x7684;&#x65B9;&#x6CD5;</p>
+<p>&#x8FD9;&#x6837;&#x7684;&#x5199;&#x6CD5;&#x53EF;&#x4EE5;&#x5C06;&#x6210;&#x5BF9;&#x51FA;&#x73B0;&#x7684;&#x4EE3;&#x7801;&#x5199;&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;&#x4E00;&#x4E2A;lock&#xFF1A;</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSRecursiveLock</span> *aLock = [[<span class="built_in">NSRecursiveLock</span> alloc] init];</span><br><span class="line">[aLock lock];</span><br><span class="line"><span class="comment">// &#x8FD9;&#x91CC;</span></span><br><span class="line"><span class="comment">//     &#x6709;</span></span><br><span class="line"><span class="comment">//        100&#x591A;&#x4E07;&#x884C;</span></span><br><span class="line">[aLock unlock]; <span class="comment">// &#x770B;&#x5230;&#x8FD9;&#x513F;&#x7684;&#x65F6;&#x5019;&#x65E9;&#x5FD8;&#x4E86;&#x548C;&#x54EA;&#x4E2A;lock&#x5BF9;&#x5E94;&#x7740;&#x4E86;</span></span><br></pre></td></tr></table></figure>
+
+<p>&#x7528;&#x4E86;onExit&#x4E4B;&#x540E;&#xFF0C;&#x4EE3;&#x7801;&#x66F4;&#x96C6;&#x4E2D;&#x4E86;&#xFF1A;</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#define onExit\</span></span><br><span class="line">    __<span class="keyword">strong</span> <span class="keyword">void</span>(^block)(<span class="keyword">void</span>) __attribute__((cleanup(blockCleanUp), unused)) = ^</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">NSRecursiveLock</span> *aLock = [[<span class="built_in">NSRecursiveLock</span> alloc] init];</span><br><span class="line">[aLock lock];</span><br><span class="line">onExit {</span><br><span class="line">    [aLock unlock]; <span class="comment">// &#x5988;&#x5988;&#x518D;&#x4E5F;&#x4E0D;&#x7528;&#x62C5;&#x5FC3;&#x6211;&#x5FD8;&#x5199;&#x540E;&#x534A;&#x6BB5;&#x4E86;</span></span><br><span class="line">};</span><br><span class="line"><span class="comment">// &#x8FD9;&#x91CC;</span></span><br><span class="line"><span class="comment">//    &#x7231;&#x591A;&#x5C11;&#x884C;</span></span><br><span class="line"><span class="comment">//           &#x5C31;&#x591A;&#x5C11;&#x884C;</span></span><br></pre></td></tr></table></figure>
+
+<p>&#x53C2;&#x8003;&#x8D44;&#x6599;&#xFF1A;</p>
+<ul class="ui list">
+<li>&#x539F;&#x8D34;&#xFF1A;<a href="http://blog.sunnyxx.com/2014/09/15/objc-attribute-cleanup/" target="_blank" rel="noopener">http://blog.sunnyxx.com/2014/09/15/objc-attribute-cleanup/</a></li>
+<li><a href="https://nshipster.com/__attribute__/" target="_blank" rel="noopener">&#x5176;&#x4ED6;&#x4E00;&#x4E9B;&#x5E38;&#x7528;&#x7684;<strong>attribute</strong>&#x4ECB;&#x7ECD;</a></li>
+</ul>
+<h3 id="builtin-functions"><a href="#builtin-functions" class="headerlink" title="__builtin functions"></a>__builtin functions</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//&#x5F53;&#x524D;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#xFF1A;</span></span><br><span class="line"><span class="keyword">void</span> *addr = __builtin_return_address(<span class="number">0</span>);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt; %p&quot;</span>, addr);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Unavailable-attribute"><a href="#Unavailable-attribute" class="headerlink" title="Unavailable attribute"></a>Unavailable attribute</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#define NS_AUTOMATED_REFCOUNT_UNAVAILABLE __attribute__((unavailable(<span class="meta-string">&quot;not available in automatic reference counting mode&quot;</span>)))</span></span><br></pre></td></tr></table></figure>
+
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:31:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Crashlog-related/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    Crashlog related
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Bit-operations/" class="ui tiny button">
+                    
+                    Bit operations
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

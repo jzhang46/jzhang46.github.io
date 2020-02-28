@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>iOS App中与tail call相关的一个bug定位 | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="今天遇到个崩溃，栈顶崩溃的地址是gcd里的一个内部函数，log中显示其直接调用者是我们的代码，但实际代码其实并未调用此函数。以下记录一下定位此问题过程中的一些收获。 拿到手的是一条崩溃log： 崩溃基本信息： 崩溃位置为thread 10，其调用栈如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS App中与tail call相关的一个bug定位">
+<meta property="og:url" content="http://yoursite.com/2018/12/28/iOS-tailcall-bug/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="今天遇到个崩溃，栈顶崩溃的地址是gcd里的一个内部函数，log中显示其直接调用者是我们的代码，但实际代码其实并未调用此函数。以下记录一下定位此问题过程中的一些收获。 拿到手的是一条崩溃log： 崩溃基本信息： 崩溃位置为thread 10，其调用栈如下：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/pics/tailcall_crash_header.png">
+<meta property="og:image" content="http://yoursite.com/pics/tailcall_crash_info.png">
+<meta property="og:image" content="https://www.zhangjiezhi.com/pics/tailcall_func_a.png">
+<meta property="og:image" content="http://yoursite.com/pics/tailcall_func_b.png">
+<meta property="og:image" content="http://yoursite.com/pics/tailcall_func_c.png">
+<meta property="og:image" content="http://yoursite.com/pics/tailcall_apple_arm64.png">
+<meta property="og:image" content="http://yoursite.com/pics/tailcall_func_b_asm.jpg">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.931Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS App中与tail call相关的一个bug定位">
+<meta name="twitter:description" content="今天遇到个崩溃，栈顶崩溃的地址是gcd里的一个内部函数，log中显示其直接调用者是我们的代码，但实际代码其实并未调用此函数。以下记录一下定位此问题过程中的一些收获。 拿到手的是一条崩溃log： 崩溃基本信息： 崩溃位置为thread 10，其调用栈如下：">
+<meta name="twitter:image" content="http://yoursite.com/pics/tailcall_crash_header.png">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-iOS-tailcall-bug" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    iOS App中与tail call相关的一个bug定位
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <p>&#x4ECA;&#x5929;&#x9047;&#x5230;&#x4E2A;&#x5D29;&#x6E83;&#xFF0C;&#x6808;&#x9876;&#x5D29;&#x6E83;&#x7684;&#x5730;&#x5740;&#x662F;gcd&#x91CC;&#x7684;&#x4E00;&#x4E2A;&#x5185;&#x90E8;&#x51FD;&#x6570;&#xFF0C;log&#x4E2D;&#x663E;&#x793A;&#x5176;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x8005;&#x662F;&#x6211;&#x4EEC;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x4F46;&#x5B9E;&#x9645;&#x4EE3;&#x7801;&#x5176;&#x5B9E;&#x5E76;&#x672A;&#x8C03;&#x7528;&#x6B64;&#x51FD;&#x6570;&#x3002;&#x4EE5;&#x4E0B;&#x8BB0;&#x5F55;&#x4E00;&#x4E0B;&#x5B9A;&#x4F4D;&#x6B64;&#x95EE;&#x9898;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x6536;&#x83B7;&#x3002;</p>
+<p>&#x62FF;&#x5230;&#x624B;&#x7684;&#x662F;&#x4E00;&#x6761;&#x5D29;&#x6E83;log&#xFF1A;</p>
+<p>&#x5D29;&#x6E83;&#x57FA;&#x672C;&#x4FE1;&#x606F;&#xFF1A;<br><a class="magnific-img" href="/pics/tailcall_crash_header.png"><img src="/pics/tailcall_crash_header.png" alt="tailcall_crash_header" class="ui centered image"></a></p>
+<p>&#x5D29;&#x6E83;&#x4F4D;&#x7F6E;&#x4E3A;thread 10&#xFF0C;&#x5176;&#x8C03;&#x7528;&#x6808;&#x5982;&#x4E0B;&#xFF1A;<br><a class="magnific-img" href="/pics/tailcall_crash_info.png"><img src="/pics/tailcall_crash_info.png" alt="tailcall_crash_info" class="ui centered image"></a></p>
+<a id="more"></a>
+
+
+<p><strong>&#x5148;&#x4ECE;<code>SEGV_ACCERR at 0x70</code>&#x5F00;&#x59CB;&#x3002;</strong></p>
+<p>&#x7ECF;&#x67E5;&#xFF0C;&#x6808;&#x9876;&#x7684;<code>dispatch_continuation_async</code>&#x65B9;&#x6CD5;&#x662F;&#x7531;<code>dispatch_sync</code>&#x8C03;&#x7528;&#x7684;&#x4E00;&#x4E2A;&#x5185;&#x90E8;&#x65B9;&#x6CD5;&#x3002;&#x901A;&#x8FC7;&#x67E5;&#x770B;<code>dispatch_continuation_async</code>&#x7684;&#x6C47;&#x7F16;&#x4EE3;&#x7801;&#xFF0C;&#x7ED3;&#x5408;&#x5176;&#x5F00;&#x6E90;&#x5B9E;&#x73B0;&#xFF0C;<code>SEGV_ACCERR at 0x70</code>&#x5E94;&#x8BE5;&#x662F;&#x5728;&#x8C03;&#x7528;<code>dispatch_continuation_async</code>&#x65F6;&#x7ED9;queue&#x53C2;&#x6570;&#x4F20;&#x4E86;0&#x3002;</p>
+<p>&#x4F46;&#x4E0E;&#x4E0A;&#x56FE;&#x4E2D;Thread 10&#x7684;&#x5D29;&#x6E83;&#x6808;&#x76F8;&#x77DB;&#x76FE;&#x7684;&#x662F;&#xFF0C;<code>audioSourceDidStop</code>&#x5E76;&#x672A;&#x76F4;&#x63A5;&#x8C03;&#x7528;<code>dispatch_async</code>&#x3002;</p>
+<p><code>audioSourceDidStop</code>&#x7684;&#x6E90;&#x7801;&#x5982;&#x4E0B;&#xFF1A;<br><a class="magnific-img" href="https://www.zhangjiezhi.com/pics/tailcall_func_a.png"><img src="https://www.zhangjiezhi.com/pics/tailcall_func_a.png" alt="tailcall_func_a" class="ui centered image"></a></p>
+<p>&#x5C06;&#x5D29;&#x6E83;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#x4E2D;<code>lr</code>&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x5730;&#x5740;&#x7ECF;&#x8FC7;<code>atos</code>&#x8FDB;&#x884C;&#x7B26;&#x53F7;&#x89E3;&#x6790;&#x540E;&#x5F97;&#x5230;&#xFF0C;&#x5D29;&#x6E83;&#x5F53;&#x65F6;&#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#x5E94;&#x4E3A;&#xFF1A;<code>vadData2SpeexData</code>&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x6587;&#x4EF6;485&#x884C;&#x5904;&#xFF1A;</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">atos -arch arm64 -o xxx.dSYM/Contents/Resources/DWARF/XXX -l 0x10016c000 0x00000001003e5b80</span></span><br><span class="line">-[SogouDefaultSpeechRecognizer vadData2SpeexData:status:beginSampleOffset:endSampleOffset:] (in SogouInput) (SogouDefaultSpeechRecognizer.m:485)</span><br></pre></td></tr></table></figure>
+
+<p>&#x5B9E;&#x9645;&#x4EE3;&#x7801;&#x4E2D;<code>audioSourceDidStop</code>&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x901A;&#x8FC7;<code>postEndSignal</code>&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x5230;&#x4E86;<code>vadData2SpeexData</code>&#xFF0C;&#x800C;&#x6B64;&#x65B9;&#x6CD5;&#x4E5F;&#x7684;&#x786E;&#x8C03;&#x5230;&#x4E86;<code>dispatch_async</code>&#xFF0C;&#x5176;485&#x884C;&#x4E3A;<code>dispatch_async</code>&#x7684;&#x4E0B;&#x4E00;&#x884C;&#x3002;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x57FA;&#x672C;&#x786E;&#x5B9A;&#xFF0C;&#x5D29;&#x6E83;&#x65F6;&#x7684;&#x73B0;&#x573A;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#x662F;&#xFF1A;</p>
+<blockquote>
+<p><code>audioSourceDidStop</code> -&gt; <code>postEndSignal</code> -&gt; <code>vadData2SpeexData</code></p>
+</blockquote>
+<p>&#x5176;&#x4E2D;<code>postEndSignal</code>&#x7684;&#x6E90;&#x7801;&#x5982;&#x4E0B;&#xFF1A;<br><a class="magnific-img" href="/pics/tailcall_func_b.png"><img src="/pics/tailcall_func_b.png" alt="tailcall_func_b" class="ui centered image"></a></p>
+<p>&#x518D;&#x7ECF;&#x8FC7;&#x8FDB;&#x4E00;&#x6B65;&#x5B9A;&#x4F4D;&#xFF0C;&#x5D29;&#x6E83;&#x539F;&#x56E0;&#x5E94;&#x8BE5;&#x662F;&#xFF1A;<br>&#x5728;<code>vadData2SpeexData</code>&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x7ED9;dispatch_async&#x4F20;&#x5165;&#x7684;queue&#x53C2;&#x6570;&#x7684;&#x786E;&#x4F1A;&#x88AB;&#x591A;&#x4E2A;&#x7EBF;&#x7A0B;&#x8FDB;&#x884C;&#x8BFB;&#x5199;&#xFF0C;&#x5728;&#x8C03;&#x7528;&#x65F6;&#x7684;&#x786E;&#x53EF;&#x80FD;&#x4E3A;&#x7A7A;&#xFF1A;<br><a class="magnific-img" href="/pics/tailcall_func_c.png"><img src="/pics/tailcall_func_c.png" alt="tailcall_func_c" class="ui centered image"></a></p>
+<p>&#x6240;&#x4EE5;&#x57FA;&#x672C;&#x53EF;&#x4EE5;&#x786E;&#x5B9A;&#x4FEE;&#x6539;&#x65B9;&#x5411;&#x4E3A;_speexQueue&#x7684;&#x591A;&#x7EBF;&#x7A0B;&#x4FDD;&#x62A4;&#x3002;</p>
+<p><strong>&#x4F46;&#x662F;&#x4E3A;&#x4F55;&#x5D29;&#x6E83;&#x6808;&#x4E2D;&#x5E76;&#x672A;&#x663E;&#x793A;postEndSignal&#x548C;vadData2SpeexData&#x5462;&#xFF1F;</strong></p>
+<p>&#x9996;&#x5148;&#x6000;&#x7591;&#x662F;&#x6808;&#x56DE;&#x6EAF;&#x51FA;&#x4E86;&#x95EE;&#x9898;&#xFF0C;&#x662F;&#x4E0D;&#x662F;&#x6808;&#x88AB;&#x5199;&#x574F;&#x4E86;&#xFF1F;&#x4F46;&#x6309;&#x7406;&#x8BF4;&#x5982;&#x679C;&#x5199;&#x574F;&#x7684;&#x8BDD;&#x540E;&#x9762;&#x7684;frame&#x4E5F;&#x5C31;&#x627E;&#x4E0D;&#x5230;&#x4E86;&#xFF0C;&#x7CFB;&#x7EDF;&#x662F;&#x5982;&#x4F55;&#x5728;&#x5934;&#x90E8;&#x627E;&#x4E0D;&#x5230;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x627E;&#x5230;&#x66F4;&#x6DF1;&#x5C42;&#x7684;frame pointer&#x7684;&#x5462;&#xFF1F;</p>
+<p>&#x5E26;&#x7740;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x67E5;&#x4E86;&#x4E00;&#x4E9B;&#x6587;&#x6863;&#xFF0C;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x6709;&#x8DA3;&#x7684;&#x70B9;&#xFF1A;</p>
+<p>apple&#x7684;<code>arm64 calling convention</code>&#x89C4;&#x8303;&#x4E2D;&#x6709;&#x5982;&#x4E0B;&#x63CF;&#x8FF0;&#xFF1A;<br><a class="magnific-img" href="/pics/tailcall_apple_arm64.png"><img src="/pics/tailcall_apple_arm64.png" alt="tailcall_apple_arm64" class="ui centered image"></a></p>
+<p>&#x90A3;&#x4E48;&#x5728;&#x521A;&#x624D;&#x8FD9;&#x4E2A;&#x5D29;&#x6E83;&#x7684;&#x73B0;&#x573A;&#x6709;&#x6CA1;&#x6709;tail call&#x5462;&#xFF1F;&#x7528;hopper&#x770B;&#x4E86;&#x4E00;&#x4E0B;&#xFF0C;&#x5728;<code>postEndSignal</code>&#x8C03;&#x7528;<code>vadData2SpeexData</code>&#x65F6;&#xFF0C;&#x7684;&#x786E;&#x662F;&#x4E00;&#x4E2A;&#x76F4;&#x63A5;&#x8DF3;&#x8F6C;&#xFF0C;<code>postEndSignal</code>&#x7684;&#x6C47;&#x7F16;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;<br><a class="magnific-img" href="/pics/tailcall_func_b_asm.jpg"><img src="/pics/tailcall_func_b_asm.jpg" alt="tailcall_func_b_asm" class="ui centered image"></a></p>
+<p>&#x5982;&#x7EA2;&#x6846;&#x4E2D;&#x6240;&#x793A;&#xFF0C;&#x5728;&#x8DF3;&#x8F6C;&#x5230;<code>objc_msgSend</code>&#xFF08;&#x5373;&#x8C03;&#x7528;<code>vadData2SpeexData</code>&#xFF09;&#x524D;&#x5DF2;&#x7ECF;&#x5C06;&#x6808;&#x548C;&#x5BC4;&#x5B58;&#x5668;&#xFF08;&#x5305;&#x62EC;<code>x29</code>&#x548C;<code>x30</code>&#xFF0C;&#x5373;<code>fp</code>&#x548C;<code>lr</code>&#xFF09;&#x90FD;&#x6062;&#x590D;&#x6210;&#x8C03;&#x7528;<code>postEndSignal</code>&#x4E4B;&#x524D;&#x7684;&#x72B6;&#x6001;&#x4E86;&#xFF0C;&#x800C;&#x4E14;&#x8DF3;&#x8F6C;&#x7528;&#x7684;&#x662F;<code>b</code>&#x6307;&#x4EE4;&#x3002;</p>
+<p>&#x8FD9;&#x6837;&#x5BF9;<code>vadData2SpeexData</code>&#x7684;&#x8C03;&#x7528;&#x5C31;&#x50CF;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x5185;&#x7684;&#x5730;&#x5740;&#x8DF3;&#x8F6C;&#x4E00;&#x6837;&#xFF0C;&#x800C;&#x4E14;&#x5176;&#x6267;&#x884C;&#x73AF;&#x5883;&#x4E3A;<code>audioSourceDidStop</code>&#x4E2D;&#xFF08;&#x7C7B;&#x6BD4;&#x5C06;<code>vadData2SpeexData</code> inline&#x5230;<code>audioSourceDidStop</code>&#x4E2D;&#xFF09;&#xFF0C;&#x5373;&#x5E76;&#x6CA1;&#x6709;&#x7ED9;<code>vadData2SpeexData</code>&#x5206;&#x914D;frame record&#xFF0C;&#x800C;<code>postEndSignal</code>&#x7684;&#x6267;&#x884C;&#x5DF2;&#x7ECF;&#x7ED3;&#x675F;&#x3002;</p>
+<p>&#x5D29;&#x6E83;&#x65F6; fp&#x5BC4;&#x5B58;&#x5668;&#x5B58;&#x653E;&#x7684;&#x5E94;&#x8BE5;&#x662F;<code>dispatch_continuation_async</code>&#x7684;fp, &#x56E0;&#x6B64;&#x6808;&#x9876;&#x4E3A;&#x6B64;gcd&#x65B9;&#x6CD5;&#xFF1B;<br>&#x5176;&#x524D;&#x9A71;fp&#x4E3A;<code>audioSourceDidStop</code>&#x7684;fp&#xFF0C;&#x627E;&#x5230;&#x5176;&#x5BF9;&#x5E94;&#x7684;pc&#x4E3A;:<code>audioSourceDidStop</code>&#x4E2D;&#x7684;1048&#x884C;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x5730;&#x5740;&#x3002;</p>
+<p>** &#x81F3;&#x6B64;&#xFF0C;&#x57FA;&#x672C;&#x53EF;&#x4EE5;&#x786E;&#x5B9A;&#x662F;&#x4E00;&#x4E2A;&#x591A;&#x7EBF;&#x7A0B;&#x5BFC;&#x81F4;&#x7684;&#x5D29;&#x6E83;&#xFF0C;&#x5176;&#x5934;&#x90E8;&#x7684;&#x5D29;&#x6E83;&#x6808;&#x56E0;&#x4E3A;tail call&#x7684;&#x4F18;&#x5316;&#x800C;&#x88AB;&#x9690;&#x85CF;&#x8D77;&#x6765;&#x4E86;&#x3002;**</p>
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-28T13:35:19.000Z" itemprop="datePublished">2018-12-28</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2019/05/07/ARC/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    ObjC ARC Internals
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/19/OCPack-design/" class="ui tiny button">
+                    
+                    OCPack技术方案总结
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

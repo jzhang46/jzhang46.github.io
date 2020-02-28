@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Networking | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="1. 网络请求返回状态调试工具： http://httpstat.us 返回200：http://httpstat.us/200  2. tcpdump抓包12345678910111213//Start active device$rvictl -s 7d0982cc809a1ee90ac726267f1f02732ac94320        //device udid//List ongoi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Networking">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Networking/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="1. 网络请求返回状态调试工具： http://httpstat.us 返回200：http://httpstat.us/200  2. tcpdump抓包12345678910111213//Start active device$rvictl -s 7d0982cc809a1ee90ac726267f1f02732ac94320        //device udid//List ongoi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.929Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Networking">
+<meta name="twitter:description" content="1. 网络请求返回状态调试工具： http://httpstat.us 返回200：http://httpstat.us/200  2. tcpdump抓包12345678910111213//Start active device$rvictl -s 7d0982cc809a1ee90ac726267f1f02732ac94320        //device udid//List ongoi">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Networking" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Networking
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <h3 id="1-&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x8FD4;&#x56DE;&#x72B6;&#x6001;&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#xFF1A;"><a href="#1-&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x8FD4;&#x56DE;&#x72B6;&#x6001;&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#xFF1A;" class="headerlink" title="1. &#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x8FD4;&#x56DE;&#x72B6;&#x6001;&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#xFF1A;"></a>1. &#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x8FD4;&#x56DE;&#x72B6;&#x6001;&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#xFF1A;</h3><blockquote>
+<p><a href="http://httpstat.us" target="_blank" rel="noopener">http://httpstat.us</a></p>
+<p>&#x8FD4;&#x56DE;200&#xFF1A;<br><a href="http://httpstat.us/200" target="_blank" rel="noopener">http://httpstat.us/200</a></p>
+</blockquote>
+<h3 id="2-tcpdump&#x6293;&#x5305;"><a href="#2-tcpdump&#x6293;&#x5305;" class="headerlink" title="2. tcpdump&#x6293;&#x5305;"></a>2. tcpdump&#x6293;&#x5305;</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//Start active device</span><br><span class="line"><span class="variable">$rvictl</span> -s 7d0982cc809a1ee90ac726267f1f02732ac94320        //device udid</span><br><span class="line"></span><br><span class="line">//List ongoings active devices</span><br><span class="line"><span class="variable">$rvictl</span> -l</span><br><span class="line"></span><br><span class="line">//tcp dump</span><br><span class="line"><span class="variable">$sudo</span> tcpdump -i rvi0 -w ~/Desktop/output.pcap</span><br><span class="line"></span><br><span class="line">//Stop</span><br><span class="line"><span class="variable">$rvictl</span> -x 7d0982cc809a1ee90ac726267f1f02732ac94320    </span><br><span class="line"></span><br><span class="line">//&#x751F;&#x6210;&#x7684; output.pcap &#x53EF;&#x7528;WireShark&#x6765;&#x67E5;&#x770B;&#x3002;</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3 id="3-TCP-NODELAY-amp-TCP-QUICKACK"><a href="#3-TCP-NODELAY-amp-TCP-QUICKACK" class="headerlink" title="3. TCP_NODELAY &amp; TCP_QUICKACK"></a>3. TCP_NODELAY &amp; TCP_QUICKACK</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">By default TCP users Nagle&#x2019;s algorithm to collect small outgoing packets to send all at once. This have a detrimental effect on latency.</span><br><span class="line"></span><br><span class="line">Using TCP_NODELAY and TCP_CORK to improve network latency</span><br><span class="line">1. Applications that require lower latency on every packet sent should be run on sockets with TCP_NODELAY enabled. It can be enabled through the setsockopt command with the sockets API:</span><br><span class="line"># int one = 1;</span><br><span class="line"></span><br><span class="line"># setsockopt(descriptor, SOL_TCP, TCP_NODELAY, &amp;one, sizeof(one));</span><br><span class="line"></span><br><span class="line">2. For this to be used effectively, applications must avoid doing small, logically related buffer writes. Because TCP_NODELAY is enabled, these small writes will make TCP send these multiple buffers as individual packets, which can result in poor overall performance.</span><br><span class="line">If applications have several buffers that are logically related and that should be sent as one packet it could be possible to build a contiguous packet in memory and then send the logical packet to TCP, on a socket configured with TCP_NODELAY.</span><br><span class="line">Alternatively, create an I/O vector and pass it to the kernel using writev on a socket configured with TCP_NODELAY.</span><br><span class="line">3. Another option is to use TCP_CORK, which tells TCP to wait for the application to remove the cork before sending any packets. This command will cause the buffers it receives to be appended to the existing buffers. This allows applications to build a packet in kernel space, which may be required when using different libraries that provides abstractions for layers. To enable TCP_CORK, set it to a value of 1 using the setsockopt sockets API (this is known as &quot;corking the socket&quot;):</span><br><span class="line"># int one = 1;</span><br><span class="line"></span><br><span class="line"># setsockopt(descriptor, SOL_TCP, TCP_CORK, &amp;one, sizeof(one));</span><br><span class="line"></span><br><span class="line">4. When the logical packet has been built in the kernel by the various components in the application, tell TCP to remove the cork. TCP will send the accumulated logical packet right away, without waiting for any further packets from the application.</span><br><span class="line"># int zero = 0;</span><br><span class="line"></span><br><span class="line"># setsockopt(descriptor, SOL_TCP, TCP_CORK, &amp;zero, sizeof(zero));</span><br><span class="line"></span><br><span class="line">Related Manual Pages</span><br><span class="line">For more information, or for further reading, the following man pages are related to the information given in this section.</span><br><span class="line">* tcp(7)</span><br><span class="line">* setsockopt(3p)</span><br><span class="line">* setsockopt(2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-nc&#x547D;&#x4EE4;"><a href="#4-nc&#x547D;&#x4EE4;" class="headerlink" title="4. nc&#x547D;&#x4EE4;"></a>4. nc&#x547D;&#x4EE4;</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//TCP&#x7684;server&#x7AEF;</span><br><span class="line">$nc -l 1234    //&#x76D1;&#x542C;1234&#x7AEF;&#x53E3;</span><br><span class="line"></span><br><span class="line">//TCP&#x7684;client&#x7AEF;</span><br><span class="line">$nc 127.0.0.1 1234 //&#x8FDE;&#x63A5;127.0.0.1&#x7684;1234&#x7AEF;&#x53E3;&#xFF0C;&#x540E;&#x9762;&#x53EF;&#x4EE5;&#x8F93;&#x5165;&#x6587;&#x5B57;</span><br><span class="line">$nc 127.0.0.1 1234 &lt; input.file    //&#x8FDE;&#x63A5;1234&#x7AEF;&#x53E3;&#xFF0C;&#x5E76;&#x5C06;&#x6587;&#x4EF6;&#x4F20;&#x8FC7;&#x53BB;</span><br><span class="line"></span><br><span class="line">//&#x8BE6;&#x89C1;&#xFF1A; man nc</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-iOS-connection-per-Host"><a href="#5-iOS-connection-per-Host" class="headerlink" title="5. iOS connection per Host"></a>5. iOS connection per Host</h3><p><code>NSURLConnection</code>&#x9650;&#x5236;&#x540C;&#x4E00;host&#x53EA;&#x80FD;&#x540C;&#x65F6;&#x5EFA;&#x7ACB;4&#x4E2A;&#x8FDE;&#x63A5;&#xFF0C;&#x591A;&#x4E86;&#x4F1A;&#x8D85;&#x65F6;&#xFF08;&#x8FD9;&#x5E94;&#x8BE5;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x9891;&#x7E41;&#x7ED9;&#x51E0;&#x4E2A;server&#x53D1;&#x8BF7;&#x6C42;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x51FA;&#x73B0;&#x8D85;&#x65F6;&#xFF09;&#xFF1A;</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//iOS&#x9650;&#x5236;&#x5BF9;&#x540C;&#x4E00;&#x4E2A;host&#x6700;&#x591A;4&#x4E2A;&#x8FDE;&#x63A5;&#xFF0C;&#x7B2C;&#x4E94;&#x4E2A;&#x8BF7;&#x6C42;&#x4F1A;&#x8D85;&#x65F6;</span></span><br><span class="line">- (<span class="keyword">void</span>)startConnections {</span><br><span class="line">    <span class="built_in">NSMutableArray</span> *connections= [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i= <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) {</span><br><span class="line">        <span class="built_in">NSURL</span> *url= [<span class="built_in">NSURL</span> URLWithString:<span class="string">@&quot;https://push.lightstreamer.com/lightstreamer/create_session.txt?LS_user=&amp;LS_adapter_set=DEMO&amp;LS_ios_version=1.0&quot;</span>];</span><br><span class="line">        <span class="built_in">NSMutableURLRequest</span> *req= [<span class="built_in">NSMutableURLRequest</span> requestWithURL:url];</span><br><span class="line">        req.timeoutInterval = <span class="number">15</span>;</span><br><span class="line">        <span class="built_in">NSURLConnection</span> *conn= [[<span class="built_in">NSURLConnection</span> alloc] initWithRequest:req delegate:<span class="keyword">self</span> startImmediately:<span class="literal">NO</span>];</span><br><span class="line">        [connections addObject:conn];</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSURLConnection</span> *conn <span class="keyword">in</span> connections)</span><br><span class="line">        [conn start];</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad {</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    [<span class="keyword">self</span> startConnections];</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)didReceiveMemoryWarning {</span><br><span class="line">    [<span class="keyword">super</span> didReceiveMemoryWarning];</span><br><span class="line">    <span class="comment">// Dispose of any resources that can be recreated.</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveResponse:(<span class="built_in">NSURLResponse</span> *)response</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;Connection %p did receive response %ld&quot;</span>, connection, [(<span class="built_in">NSHTTPURLResponse</span> *) response statusCode]);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveData:(<span class="built_in">NSData</span> *)data</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;Connection %p did receive %ld bytes:\n%@&quot;</span>, connection, [data length], [[<span class="built_in">NSString</span> alloc] initWithData:data encoding:<span class="built_in">NSUTF8StringEncoding</span>]);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didFailWithError:(<span class="built_in">NSError</span> *)error</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;Connection %p did fail with error %@&quot;</span>, connection, error);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p><code>NSURLSession</code>&#x7684;<code>NSURLSessionConfiguration</code>&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;<code>httpMaximumConnectionsPerHost</code>,&#x8C03;&#x5927;&#x4EE5;&#x540E;&#x5C31;&#x6CA1;&#x95EE;&#x9898;&#x4E86;&#xFF1A;</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)startConnections_session {</span><br><span class="line">    <span class="built_in">NSURL</span> *url= [<span class="built_in">NSURL</span> URLWithString:<span class="string">@&quot;https://push.lightstreamer.com/lightstreamer/create_session.txt?LS_user=&amp;LS_adapter_set=DEMO&amp;LS_ios_version=1.0&quot;</span>];</span><br><span class="line">    <span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:url];</span><br><span class="line">    <span class="built_in">NSURLSessionConfiguration</span> *configuration = [<span class="built_in">NSURLSessionConfiguration</span> defaultSessionConfiguration];</span><br><span class="line">    configuration.timeoutIntervalForRequest = <span class="number">10</span>;</span><br><span class="line">    [configuration setHTTPMaximumConnectionsPerHost:<span class="number">10</span>];</span><br><span class="line">    <span class="built_in">NSURLSession</span> *session = [<span class="built_in">NSURLSession</span> sessionWithConfiguration:configuration];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) {</span><br><span class="line">        <span class="built_in">NSURLSessionDataTask</span> *task = [session dataTaskWithRequest:request</span><br><span class="line">                                                completionHandler:</span><br><span class="line">                                      ^(<span class="built_in">NSData</span> *data, <span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSError</span> *error) {</span><br><span class="line">                                          <span class="built_in">NSLog</span>(<span class="string">@&quot;Task %d did receive response %ld, error: %@&quot;</span>, i, [(<span class="built_in">NSHTTPURLResponse</span> *) response statusCode], error);</span><br><span class="line">                                      }];</span><br><span class="line">        </span><br><span class="line">        [task resume];</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:43:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/NSURLSession-background-session/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    NSURLSession background session details
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Networking-in-short-lived-extension/" class="ui tiny button">
+                    
+                    Networking in short lived extension
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

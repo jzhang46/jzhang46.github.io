@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Objective C related | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="@def @defs 用于返回一个 Objective-C 类的 struct 结构，这个 struct 与原 Objective-C 类具有相同的内存布局。 Getting the isa pointer of an NSObject base instance is relatively easy, if we use the useful @defsconstruct:123static i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Objective C related">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Objective-C-related/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="@def @defs 用于返回一个 Objective-C 类的 struct 结构，这个 struct 与原 Objective-C 类具有相同的内存布局。 Getting the isa pointer of an NSObject base instance is relatively easy, if we use the useful @defsconstruct:123static i">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.930Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Objective C related">
+<meta name="twitter:description" content="@def @defs 用于返回一个 Objective-C 类的 struct 结构，这个 struct 与原 Objective-C 类具有相同的内存布局。 Getting the isa pointer of an NSObject base instance is relatively easy, if we use the useful @defsconstruct:123static i">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Objective-C-related" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Objective C related
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <h3 id="def"><a href="#def" class="headerlink" title="@def"></a>@def</h3><ul class="ui list">
+<li>@defs &#x7528;&#x4E8E;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; Objective-C &#x7C7B;&#x7684; struct &#x7ED3;&#x6784;&#xFF0C;&#x8FD9;&#x4E2A; struct &#x4E0E;&#x539F; Objective-C &#x7C7B;&#x5177;&#x6709;&#x76F8;&#x540C;&#x7684;&#x5185;&#x5B58;&#x5E03;&#x5C40;&#x3002;</li>
+<li>Getting the isa pointer of an NSObject base instance is relatively easy, if we use the useful @defsconstruct:<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> Class _isa( <span class="built_in">NSObject</span> *obj) {</span><br><span class="line">    <span class="keyword">return</span>( ((<span class="keyword">struct</span> { <span class="keyword">@defs</span>( <span class="built_in">NSObject</span>) } *) obj)-&gt;isa);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="NSSelectorFromString-&#x201D;aaa&#x201D;"><a href="#NSSelectorFromString-&#x201D;aaa&#x201D;" class="headerlink" title="NSSelectorFromString(@&#x201D;aaa&#x201D;)"></a>NSSelectorFromString(@&#x201D;aaa&#x201D;)</h3><ul class="ui list">
+<li>Internally calls <code>sel_registerName(&quot;aaa&quot;)</code>;</li>
+</ul>
+<h3 id="system-trace-Point-of-Interest-WWDC16"><a href="#system-trace-Point-of-Interest-WWDC16" class="headerlink" title="system trace Point of Interest (WWDC16)"></a>system trace Point of Interest (WWDC16)</h3><ul class="ui list">
+<li>Point of Interest:<ul>
+<li>kdebug_signpost</li>
+<li>kdebug_signpost_start(code, arg1, arg2, arg3, arg4)</li>
+<li>kdebug_signpost_end(code, arg1, arg2, arg3, arg4)<ul>
+<li>code&#x662F;&#x4E00;&#x4E2A;id&#xFF0C;&#x7528;&#x4E8E;&#x533A;&#x5206;&#x4E0D;&#x540C;Point of interest</li>
+<li>ar1, arg2, arg3&#x4E3A;&#x9884;&#x7559;&#x5B57;&#x6BB5;</li>
+<li>arg4&#x7528;&#x4E8E;&#x533A;&#x5206;&#x989C;&#x8272;<ul>
+<li>0=Blue; 1=Green; 2=Purple; 3=Orange; 4=Red<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;sys/kdebug_signpost.h&gt;</span></span></span><br><span class="line">- (<span class="keyword">void</span>)func {</span><br><span class="line">    kdebug_signpost_start(<span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="comment">//code</span></span><br><span class="line">    kdebug_signpost_end(<span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="kindof&#x5173;&#x952E;&#x5B57;"><a href="#kindof&#x5173;&#x952E;&#x5B57;" class="headerlink" title="__kindof&#x5173;&#x952E;&#x5B57;"></a>__kindof&#x5173;&#x952E;&#x5B57;</h3><p>objc&#x6CDB;&#x578B;&#x91CC;&#x5982;&#x679C;&#x4E0D;&#x7528;__kindof&#x6307;&#x5B9A;&#x6CDB;&#x578B;&#x53C2;&#x6570;&#xFF0C;add subclass object&#x53EF;&#x4EE5;&#xFF0C;&#x4F46;&#x53D6;&#x503C;&#x8D4B;&#x7ED9;&#x5B50;&#x7C7B;&#x53D8;&#x91CF;&#x65F6;&#x5C31;&#x4F1A;&#x6709;warning</p>
+<p>&#x52A0;&#x4E0A;__kindof&#x4EE5;&#x540E;&#x5C31;&#x597D;&#x4E86;&#x3002;</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableArray</span>&lt;<span class="built_in">UIView</span> *&gt; *subviews = [[<span class="built_in">NSMutableArray</span> alloc] init];</span><br><span class="line"></span><br><span class="line">[subviews addObject:[[<span class="built_in">UIView</span> alloc] init]]; <span class="comment">// Works</span></span><br><span class="line">[subviews addObject:[[<span class="built_in">UIImageView</span> alloc] init]]; <span class="comment">// Also works</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">UIView</span> *sameView = subviews[<span class="number">0</span>]; <span class="comment">// Works</span></span><br><span class="line"><span class="built_in">UIImageView</span> *sameImageView = subviews[<span class="number">1</span>]; <span class="comment">// Incompatible pointer types initializing &apos;UIImageView *&apos; with an expression of type &apos;UIView *&apos;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, <span class="built_in">NSStringFromClass</span>([sameView <span class="keyword">class</span>])); <span class="comment">// UIView</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, <span class="built_in">NSStringFromClass</span>([sameImageView <span class="keyword">class</span>])); <span class="comment">// UIImageView</span></span><br></pre></td></tr></table></figure>
+
+<p>Now, this produces a compile time warning, but does not crash at runtime. The key difference between this and the same example where the array&#x2019;s generic type is marked as __kindof, is that the compiler won&#x2019;t complain if you try to access ones of its elements, and store the result in a variable who&#x2019;s type is UIView or one of its subclasses.</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableArray</span>&lt;__kindof <span class="built_in">UIView</span> *&gt; *subviews = [[<span class="built_in">NSMutableArray</span> alloc] init];</span><br><span class="line"></span><br><span class="line">[subviews addObject:[[<span class="built_in">UIView</span> alloc] init]]; <span class="comment">// Works</span></span><br><span class="line">[subviews addObject:[[<span class="built_in">UIImageView</span> alloc] init]]; <span class="comment">// Also works</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">UIView</span> *sameView = subviews[<span class="number">0</span>]; <span class="comment">// No problem</span></span><br><span class="line"><span class="built_in">UIImageView</span> *sameImageView = subviews[<span class="number">1</span>]; <span class="comment">// No complaints now!</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, <span class="built_in">NSStringFromClass</span>([sameView <span class="keyword">class</span>])); <span class="comment">// UIView</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, <span class="built_in">NSStringFromClass</span>([sameImageView <span class="keyword">class</span>])); <span class="comment">// UIImageView</span></span><br></pre></td></tr></table></figure>
+
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:45:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Offscreen-rendering/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    Offscreen rendering
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/NSURLSession-background-session/" class="ui tiny button">
+                    
+                    NSURLSession background session details
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

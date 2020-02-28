@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Xcode cmds | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="1. Xcode commands12345678910111213141516171819202122232425262728//列出所有模拟器 $ xcrun simctl list  //找二进制文件的symbol, man symbols可以看help，/Applications/Xcode.app/Contents/Developer/usr/bin/symbols$ xcrun sym">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xcode cmds">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Xcode-cmds/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="1. Xcode commands12345678910111213141516171819202122232425262728//列出所有模拟器 $ xcrun simctl list  //找二进制文件的symbol, man symbols可以看help，/Applications/Xcode.app/Contents/Developer/usr/bin/symbols$ xcrun sym">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.931Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Xcode cmds">
+<meta name="twitter:description" content="1. Xcode commands12345678910111213141516171819202122232425262728//列出所有模拟器 $ xcrun simctl list  //找二进制文件的symbol, man symbols可以看help，/Applications/Xcode.app/Contents/Developer/usr/bin/symbols$ xcrun sym">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Xcode-cmds" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Xcode cmds
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <h3 id="1-Xcode-commands"><a href="#1-Xcode-commands" class="headerlink" title="1. Xcode commands"></a>1. Xcode commands</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">//&#x5217;&#x51FA;&#x6240;&#x6709;&#x6A21;&#x62DF;&#x5668; </span><br><span class="line">$ xcrun simctl list  </span><br><span class="line"></span><br><span class="line">//&#x627E;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x7684;symbol, man symbols&#x53EF;&#x4EE5;&#x770B;help&#xFF0C;/Applications/Xcode.app/Contents/Developer/usr/bin/symbols</span><br><span class="line">$ xcrun symbols      </span><br><span class="line"></span><br><span class="line">//&#x663E;&#x793A;&#x5F53;&#x524D;xcode&#x7684;&#x8DEF;&#x5F84;</span><br><span class="line">$xcode-select -print-path</span><br><span class="line"></span><br><span class="line">//&#x8F6C;&#x6362;plist</span><br><span class="line">$xcrun plutil -convert &lt;xml1&gt;|&lt;binary1&gt; xxx.plist</span><br><span class="line"></span><br><span class="line">//&#x5217;&#x51FA;&#x6240;&#x6709;&#x7684;scheme</span><br><span class="line">$xcodebuild -list &lt;project_file&gt;</span><br><span class="line"></span><br><span class="line">//&#x5C06;buildsetting&#x5BFC;&#x51FA;&#x5230;.xcconfig&#x6587;&#x4EF6;&#x4E2D;</span><br><span class="line">$xcodebuild -scheme &lt;scheme_name&gt; -showbuildSettings &gt;&gt; mynew.xcconfig</span><br><span class="line"></span><br><span class="line">//&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x4E2D;&#x5404;&#x4E2A;&#x6BB5;&#x7684;&#x5927;&#x5C0F;</span><br><span class="line">$xcrun size -x -l -m &lt;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&gt;</span><br><span class="line"></span><br><span class="line">//&#x53EA;&#x8F93;&#x51FA;buuild&#x6240;&#x7528;&#x547D;&#x4EE4;&#xFF0C;&#x4E0D;&#x771F;&#x6B63;build</span><br><span class="line">// -n &#x6216; -dry-run</span><br><span class="line">$xcodebuild -n -workspace &lt;YOUR_WORKSPACE&gt;.xcworkspace -scheme &lt;YOUR_SCHEME&gt;</span><br><span class="line"></span><br><span class="line">//&#x663E;&#x793A;ios&#x7684;sdk&#x8DEF;&#x5F84;</span><br><span class="line">$xcrun --sdk iphoneos --show-sdk-path</span><br><span class="line">&#x4F8B;&#xFF1A;/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3 id="2-System-commands"><a href="#2-System-commands" class="headerlink" title="2. System commands"></a>2. System commands</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//&#x663E;&#x793A;&#x5BFC;&#x5165;symbol</span><br><span class="line">$ nm -u  </span><br><span class="line"></span><br><span class="line">//&#x663E;&#x793A;&#x6240;&#x6709;&#x5BFC;&#x51FA;&#x7684;global symbol</span><br><span class="line">$ nm -g  </span><br><span class="line"></span><br><span class="line">//&#x5728;&#x76EE;&#x5F55;&#x4E2D;&#x9012;&#x5F52;&#x627E;</span><br><span class="line">$ grep -r &lt;thing-to-find&gt; &lt;folder-to-look-into&gt;</span><br><span class="line"></span><br><span class="line">//&#x8FDC;&#x7A0B;&#x62F7;&#x8D1D;&#xFF0C;&#x5982;&#x679C;&lt;destination&gt;&#x7684;&#x76EE;&#x5F55;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x4F1A;&#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x7684;folder</span><br><span class="line">$ rsync -avzP &lt;source_file_or_dir&gt; &lt;destination&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-&#x8FDB;&#x7A0B;&#x76F8;&#x5173;"><a href="#3-&#x8FDB;&#x7A0B;&#x76F8;&#x5173;" class="headerlink" title="3. &#x8FDB;&#x7A0B;&#x76F8;&#x5173;"></a>3. &#x8FDB;&#x7A0B;&#x76F8;&#x5173;</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//&#x53EF;&#x4EE5;&#x663E;&#x793A;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x548C;&#x7F51;&#x7EDC;&#x8BBF;&#x95EE;&#x60C5;&#x51B5;&#xFF0C;&#x4EE5;&#x53CA;&#x7F3A;&#x9875;&#x3001;pagein&#x7B49;</span><br><span class="line">$ fs_usage</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-lldb"><a href="#5-lldb" class="headerlink" title="5. lldb"></a>5. lldb</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">//&#x663E;&#x793A;&#x6240;&#x6709;&#x53EF;&#x7528;&#x5E73;&#x53F0;</span><br><span class="line">(lldb) platform list</span><br><span class="line"></span><br><span class="line">//&#x9009;&#x62E9;remote-ios&#x4E3A;&#x5F53;&#x524D;&#x5E73;&#x53F0;</span><br><span class="line">(lldb) platform select remote-ios --sysroot --sysroot  /Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk</span><br><span class="line"></span><br><span class="line">//&#x8FDE;&#x63A5;&#x5230;&#x8FDC;&#x7A0B;&#x7684;debugserver</span><br><span class="line">(lldb) platform connect connect://192.168.1.8:6789</span><br><span class="line"></span><br><span class="line">//&#x5217;&#x51FA;&#x8C03;&#x8BD5;&#x7684;target</span><br><span class="line">(lldb) target list</span><br><span class="line"></span><br><span class="line">//&#x8BBE;&#x7F6E;&#x65AD;&#x70B9;</span><br><span class="line">// -a &lt;addr&gt; &#x65AD;&#x5728;&#x6307;&#x5B9A;&#x7684;&#x5185;&#x5B58;&#x5730;&#x5740;</span><br><span class="line">// -s &lt;selector&gt; &#x65AD;&#x5728;ObjC&#x7684;&#x6D88;&#x606F;selector</span><br><span class="line">(lldb) breakpoint set -a 0x30036</span><br><span class="line"></span><br><span class="line">//&#x8BFB;&#x53D6;&#x5185;&#x5B58;</span><br><span class="line">// -o &#x628A;&#x5185;&#x5B58;&#x7684;&#x4E1C;&#x897F;&#x770B;&#x6210;Objective-C&#x5BF9;&#x8C61;</span><br><span class="line">(lldb) memory read &lt;&#x5F00;&#x59CB;&#x5730;&#x5740;&gt; &lt;&#x7ED3;&#x675F;&#x5730;&#x5740;&gt;</span><br><span class="line"></span><br><span class="line">//&#x7ED9;block&#x8BBE;&#x7F6E;&#x65AD;&#x70B9;&#xFF0C;&#x4F8B;&#x5B50;&#xFF1A;</span><br><span class="line">(lldb) b</span><br><span class="line">UIKit`__250-[_UIViewServiceViewControllerOperator function:]_block_invoke+214</span><br><span class="line"></span><br><span class="line">//&#x67E5;&#x627E;&#x6307;&#x5B9A;&#x7684;symbol</span><br><span class="line">(lldb) image lookup -vs __snapshotViews</span><br><span class="line"></span><br><span class="line">//&#x67E5;&#x627E;&#x67D0;&#x5730;&#x5740;&#x7684;symbol</span><br><span class="line">(lldb) image lookup -a 0x123456</span><br><span class="line"></span><br><span class="line">//&#x67E5;&#x627E;&#x6240;&#x6709;&#x540D;&#x5B57;&#x4E2D;&#x5E26;&#x6709;XXX_className&#x7684;objc&#x65B9;&#x6CD5;</span><br><span class="line">(lldb) image lookup -rn XXX_className</span><br><span class="line"></span><br><span class="line">//&#x6253;&#x5370;&#x7C7B;&#x5B9A;&#x4E49;</span><br><span class="line">(lldb) exp -lobjc -O -- [UIDebuggingInformationOverlay _shortMethodDescription]</span><br><span class="line">&lt;UIDebuggingInformationOverlay: 0x11677e258&gt;:</span><br><span class="line">in UIDebuggingInformationOverlay:</span><br><span class="line">Class Methods:</span><br><span class="line">+ (void) prepareDebuggingOverlay; (0x115da4312)</span><br><span class="line">+ (void) pushDisableApplyingConfigurations; (0x115da45c3)</span><br><span class="line">+ (void) popDisableApplyingConfigurations; (0x115da45d0)</span><br><span class="line">+ (id) overlay; (0x115da4482)</span><br><span class="line">Properties:</span><br><span class="line">@property (retain, nonatomic) UIEvent* lastTouch;  (@synthesize lastTouch = _lastTouch;)</span><br><span class="line">@property (nonatomic) struct CGPoint drawingOrigin;  (@synthesize drawingOrigin = _drawingOrigin;)</span><br><span class="line">@property (readonly, nonatomic) UIDebuggingInformationOverlayViewController* overlayViewController;</span><br><span class="line">@property (retain, nonatomic) UIDebuggingInformationRootTableViewController* rootTableViewController;</span><br><span class="line">@property (nonatomic) BOOL checkingTouches;  (@synthesize checkingTouches = _checkingTouches;)</span><br><span class="line">@property (nonatomic) BOOL touchCaptureEnabled;  (@synthesize touchCaptureEnabled = _touchCaptureEnabled;)</span><br><span class="line">@property (retain, nonatomic) NSMutableArray* touchObservers;  (@synthesize touchObservers = _touchObservers;)</span><br><span class="line">@property (retain, nonatomic) UIWindow* inspectedWindow;  (@synthesize inspectedWindow = _inspectedWindow;)</span><br><span class="line">Instance Methods:</span><br><span class="line">- (void) .cxx_destruct; (0x115da527d)</span><br><span class="line">- (id) hitTest:(struct CGPoint)arg1 withEvent:(id)arg2; (0x115da4b0d)</span><br><span class="line">- (id) lastTouch; (0x115da5228)</span><br><span class="line">- (id) inspectedWindow; (0x115da5203)</span><br><span class="line">- (void) setInspectedWindow:(id)arg1; (0x115da5214)</span><br><span class="line">- (void) setTouchCaptureEnabled:(BOOL)arg1; (0x115da51ce)</span><br><span class="line">- (id) overlayViewController; (0x115da4300)</span><br><span class="line">- (void) setCheckingTouches:(BOOL)arg1; (0x115da51ae)</span><br><span class="line">- (void) toggleFullscreen; (0x115da4ad0)</span><br><span class="line">- (void) toggleVisibility; (0x115da45dd)</span><br><span class="line">- (void) setRootTableViewController:(id)arg1; (0x115da5076)</span><br><span class="line">- (id) rootTableViewController; (0x115da5026)</span><br><span class="line">- (BOOL) checkingTouches; (0x115da519e)</span><br><span class="line">- (id) touchObservers; (0x115da51de)</span><br><span class="line">- (void) setLastTouch:(id)arg1; (0x115da5239)</span><br><span class="line">- (BOOL) touchCaptureEnabled; (0x115da51be)</span><br><span class="line">- (void) setTouchObservers:(id)arg1; (0x115da51ef)</span><br><span class="line">- (struct CGPoint) drawingOrigin; (0x115da524d)</span><br><span class="line">- (void) setDrawingOrigin:(struct CGPoint)arg1; (0x115da5265)</span><br><span class="line">- (id) init; (0x115da423e)</span><br><span class="line">- (id) initWithFrame:(struct CGRect)arg1; (0x115da4f76)</span><br><span class="line">(UIWindow &#x2026;)</span><br><span class="line"></span><br><span class="line">//&#x53CD;&#x6C47;&#x7F16;oc&#x51FD;&#x6570;</span><br><span class="line">(lldb) disassemble -n &quot;-[UIDebuggingInformationOverlay init]&quot;</span><br><span class="line">(lldb) disassemble -n &quot;-[UIDebuggingInformationOverlay init]&quot; -c10 //First 10 lines</span><br><span class="line"></span><br><span class="line">//&#x5237;&#x65B0;UI</span><br><span class="line">(lldb) expression -- (void)[CATransaction flush]</span><br></pre></td></tr></table></figure>
+
+<p>lldb&#x6362;&#x76EE;&#x5F55;/&#x673A;&#x5668;debug</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x5C06;User1&#x673A;&#x5668;&#x4E0A;&#x7684;&#x4EE3;&#x7801;&#x90E8;&#x7F72;&#x5230;&#x8BBE;&#x5907;&#x4E0A;&#xFF0C;&#x5C06;dSYM&#x6587;&#x4EF6;&#x62F7;&#x8D1D;&#x7ED9;User2</span><br><span class="line"></span><br><span class="line">&#x7136;&#x540E;&#x5728;User2&#x7684;&#x673A;&#x5668;&#x4E0A;&#x8FD0;&#x884C;xcode&#xFF0C;attach&#x952E;&#x76D8;&#x8FDB;&#x7A0B;&#xFF0C;<span class="built_in">break</span>&#x4E0B;&#x6765;&#xFF0C;&#x5728;lldb&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x8BBE;&#x7F6E;&#x5982;&#x4E0B;&#xFF1A;</span><br><span class="line"></span><br><span class="line">//&#x8BBE;&#x7F6E;symbol&#x6587;&#x4EF6;&#x8DEF;&#x5F84;</span><br><span class="line">lldb&gt; target symbols add &lt;User2&#x673A;&#x5668;&#x4E0A;dSYM&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&gt; </span><br><span class="line"></span><br><span class="line">//&#x8BBE;&#x7F6E;&#x6E90;&#x673A;&#x5668;&#x4E0E;&#x5F53;&#x524D;&#x673A;&#x5668;&#x4E0A;workarea&#x7684;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;</span><br><span class="line">lldb&gt; settings <span class="built_in">set</span> target.source-map &lt;User1&#x673A;&#x5668;&#x4E0A;&#x7684;&#x4EE3;&#x7801;&#x8DEF;&#x5F84;&gt; &lt;User2&#x673A;&#x5668;&#x4E0A;&#x7684;&#x4EE3;&#x7801;&#x8DEF;&#x5F84;&gt;</span><br><span class="line"></span><br><span class="line">&#x7136;&#x540E;&#x5C31;&#x53EF;&#x4EE5;&#x5728;xcode GUI&#x4E2D;&#x76F4;&#x63A5;&#x8BBE;&#x7F6E;&#x65AD;&#x70B9;&#x3001;&#x5355;&#x6B65;&#x8C03;&#x8BD5;&#x7B49;&#x4E86;&#x3002;</span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x5176;&#x4ED6;&#x547D;&#x4EE4;"><a href="#&#x5176;&#x4ED6;&#x547D;&#x4EE4;" class="headerlink" title="&#x5176;&#x4ED6;&#x547D;&#x4EE4;"></a>&#x5176;&#x4ED6;&#x547D;&#x4EE4;</h3><ul class="ui list">
+<li><p>&#x7EDF;&#x8BA1;&#x4EE3;&#x7801;&#x884C;&#x6570;&#x3001;&#x6587;&#x4EF6;&#x6570;(<code>cloc</code>)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$brew</span> install cloc</span><br><span class="line"><span class="variable">$clock</span> work_area_path</span><br><span class="line"></span><br><span class="line">$ cloc &lt;CODE_FOLDER&gt;</span><br><span class="line">    3113 text files.</span><br><span class="line">    2937 unique files.                                          </span><br><span class="line">     360 files ignored.</span><br><span class="line"></span><br><span class="line">github.com/AlDanial/cloc v 1.74  T=39.83 s (69.2 files/s, 16726.7 lines/s)</span><br><span class="line">---------------------------------------------------------------------------------------</span><br><span class="line">Language                             files          blank        comment           code</span><br><span class="line">---------------------------------------------------------------------------------------</span><br><span class="line">Objective C                            776          35073          18954         203497</span><br><span class="line">C++                                    225          21145          12600         132774</span><br><span class="line">C/C++ Header                          1320          28043          53283          97934</span><br><span class="line">Objective C++                           22           4312           1573          24520</span><br><span class="line">C                                       40           2021           4052          13687</span><br><span class="line">JSON                                   335              1              0           8401</span><br><span class="line">Markdown                                 5            295              0           1005</span><br><span class="line">Bourne Shell                             7            140             84            887</span><br><span class="line">INI                                     12              0              0            373</span><br><span class="line">Python                                   4             72             40            342</span><br><span class="line">XML                                      1              0              0            296</span><br><span class="line">JavaScript                               3             47             12            249</span><br><span class="line">Swift                                    4             47             30            230</span><br><span class="line">make                                     1             29             19            105</span><br><span class="line">HTML                                     1              0              0             73</span><br><span class="line">Windows Module Definition                1              0              0              3</span><br><span class="line">---------------------------------------------------------------------------------------</span><br><span class="line">SUM:                                  2757          91225          90647         484376</span><br><span class="line">---------------------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>codesign error when call xcodebuild over ssh</p>
+<ul>
+<li>Move keychain Keys from login/local to system</li>
+</ul>
+</li>
+</ul>
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:48:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/19/OCPack-design/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    OCPack技术方案总结
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Thread-and-Locks/" class="ui tiny button">
+                    
+                    Threads &amp; Locks
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

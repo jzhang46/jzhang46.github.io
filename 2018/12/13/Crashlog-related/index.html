@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content>
+    <title>Crashlog related | iOS Notes</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="Crash Log - bad address A crash with a bad address that looks like a valid heap address rotated right 4 bits is a sign of use after free. That 4 bit rotate is an encoding of the malloc free list.  Not">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crashlog related">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/Crashlog-related/index.html">
+<meta property="og:site_name" content="iOS Notes">
+<meta property="og:description" content="Crash Log - bad address A crash with a bad address that looks like a valid heap address rotated right 4 bits is a sign of use after free. That 4 bit rotate is an encoding of the malloc free list.  Not">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-27T16:22:01.927Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Crashlog related">
+<meta name="twitter:description" content="Crash Log - bad address A crash with a bad address that looks like a valid heap address rotated right 4 bits is a sign of use after free. That 4 bit rotate is an encoding of the malloc free list.  Not">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:",
+  "image": "",
+  "name": "",
+  "url": "http://yoursite.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>iOS Notes</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header"></a>
+                    
+                        <div class="meta">
+                            Coder
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Beijing</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/jzhang46"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="mailto:jz3728@163.com"><i class="large mail icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item">
+        <i class="home icon"></i>
+        首页
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Crashlog-related" class="ui main container article-type-post">
+
+    
+
+    <div class="ui  grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="sixteen wide column">
+                
+
+<h1 class="ui header">
+    
+    Crashlog related
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <h3 id="Crash-Log-bad-address"><a href="#Crash-Log-bad-address" class="headerlink" title="Crash Log - bad address"></a>Crash Log - bad address</h3><ul class="ui list">
+<li><p>A crash with a bad address that looks like a valid heap address rotated right 4 bits is a sign of use after free. That 4 bit rotate is an encoding of the malloc free list.</p>
+</li>
+<li><p>Not mentioned in WWDC 2018 session 414: </p>
+<ul>
+<li>Another malloc free list signature is a bad address 0x&#x2026;bead; 0x&#x2026;bec0 and 0x&#x2026;bec8 are common in objc_msgSend due to masking and offsets. That value is a remnant of the malloc free list encoding by he nanozone allocator on some platforms.</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+
+<h3 id="EXC-GUARD-exception"><a href="#EXC-GUARD-exception" class="headerlink" title="EXC_GUARD exception"></a>EXC_GUARD exception</h3><p>&#x7CFB;&#x7EDF;&#x4F1A;&#x5728;&#x4F7F;&#x7528;&#x67D0;&#x4E9B;&#x8D44;&#x6E90;&#x65F6;&#x7ED9;&#x8D44;&#x6E90;&#x52A0;&#x4E0A;guard&#xFF0C;&#x7CFB;&#x7EDF;&#x8BBF;&#x95EE;&#x8FD9;&#x4E9B;guarded&#x8D44;&#x6E90;&#x65F6;&#x4F1A;&#x4F7F;&#x7528;&#x7279;&#x6B8A;&#x7684;guarded api&#xFF0C;&#x5982;&#x679C;&#x5176;&#x4ED6;&#x6A21;&#x5757;&#x8BBF;&#x95EE;&#x4E86;&#x8FD9;&#x4E9B;&#x8D44;&#x6E90;&#xFF0C;&#x5C31;&#x4F1A;&#x89E6;&#x53D1;EXC_GUARD exception.</p>
+<blockquote>
+<p>Guarded Resource Violation [EXC_GUARD]</p>
+<p>The process violated a guarded resource protection. System libraries may mark certain file descriptors as guarded, after which normal operations on those descriptors will trigger an EXC_GUARD exception (when it wants to operate on these file descriptors, the system uses special &#x2018;guarded&#x2019; private APIs). This helps you quickly track down issues such as closing a file descriptor that had been opened by a system library. For example, if an app closes the file descriptor used to access the SQLite file backing a Core Data store, Core Data would then crash mysteriously much later on. The guard exception gets these problems noticed sooner, and thus makes them easier to debug.<br>Crash reports from newer versions of iOS include human-readable details about the operation that caused the EXC_GUARD exception in the Exception Subtype and Exception Message fields. In crash reports from macOS or older versions of iOS, this information is encoded into the first Exception Code as a bitfield which breaks down as follows:</p>
+<ul class="ui list">
+<li>[63:61] - Guard Type: The type of the guarded resource. A value of 0x2 indicates the resource is a file descriptor.</li>
+<li>[60:32] - Flavor: The conditions under which the violation was triggered.<br>If the first (1 &lt;&lt; 0) bit is set, the process attempted to invoke close() on a guarded file descriptor.</li>
+</ul>
+<p>If the second (1 &lt;&lt; 1) bit is set, the process attempted to invoke dup(), dup2(), or fcntl() with the F_DUPFD or F_DUPFD_CLOEXEC commands on a guarded file descriptor.</p>
+<p>If the third (1 &lt;&lt; 2) bit is set, the process attempted to send a guarded file descriptor via a socket.</p>
+<p>If the fifth (1 &lt;&lt; 4) bit is set, the process attempted to write to a guarded file descriptor.</p>
+<ul class="ui list">
+<li>[31:0] - File Descriptor: The guarded file descriptor that the process attempted to modify.</li>
+</ul>
+</blockquote>
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2018-12-13T01:32:24.000Z" itemprop="datePublished">2018-12-13</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/2018/12/13/Debugger-and-Anti-debugging/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    Debugger &amp; Anti-debugging
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/2018/12/13/Clang-attributes-and-Xcode-project-settings/" class="ui tiny button">
+                    
+                    Clang attributes &amp; Xcode project settings
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2020 <a href="/">iOS Notes</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>
