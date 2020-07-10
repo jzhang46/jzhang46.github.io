@@ -9,17 +9,17 @@
     <title>Mimalloc: Free List Sharding in Action | iOS Notes</title>
 
     <!-- Open Graph -->
-    <meta name="description" content="Main idea: Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc   Use separate thread-free lists for frees by other threads avoid atomic operations in the fast pat">
+    <meta name="description" content="Main idea1. Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc  2. Use separate thread-free lists for frees by other threads avoid atomic operations in the fast">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mimalloc: Free List Sharding in Action">
 <meta property="og:url" content="http://yoursite.com/2020/07/10/mimalloc/index.html">
 <meta property="og:site_name" content="iOS Notes">
-<meta property="og:description" content="Main idea: Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc   Use separate thread-free lists for frees by other threads avoid atomic operations in the fast pat">
+<meta property="og:description" content="Main idea1. Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc  2. Use separate thread-free lists for frees by other threads avoid atomic operations in the fast">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-10T04:02:55.889Z">
+<meta property="og:updated_time" content="2020-07-10T04:08:30.796Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mimalloc: Free List Sharding in Action">
-<meta name="twitter:description" content="Main idea: Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc   Use separate thread-free lists for frees by other threads avoid atomic operations in the fast pat">
+<meta name="twitter:description" content="Main idea1. Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc  2. Use separate thread-free lists for frees by other threads avoid atomic operations in the fast">
 
     <script type="application/ld+json">
 {
@@ -123,7 +123,7 @@
     
     <a href="/index.html" class="item">
         <i class="home icon"></i>
-        首页
+        HOME
     </a>
 
     
@@ -158,13 +158,11 @@
 
                     <div class="article-entry" itemprop="articleBody">
                         
-                        <h3 id="Main-idea"><a href="#Main-idea" class="headerlink" title="Main idea:"></a>Main idea:</h3><ol class="ui list">
-<li>Extreme free list sharding<ul>
+                        <h2 id="Main-idea"><a href="#Main-idea" class="headerlink" title="Main idea"></a>Main idea</h2><h4 id="1-Extreme-free-list-sharding"><a href="#1-Extreme-free-list-sharding" class="headerlink" title="1. Extreme free list sharding"></a>1. Extreme free list sharding</h4><ul class="ui list">
 <li>a free list per mimalloc page (64 KB)</li>
 <li>keeps locality of malloc</li>
 </ul>
-</li>
-<li>Use separate thread-free lists for frees by other threads<ul>
+<h4 id="2-Use-separate-thread-free-lists-for-frees-by-other-threads"><a href="#2-Use-separate-thread-free-lists-for-frees-by-other-threads" class="headerlink" title="2. Use separate thread-free lists for frees by other threads"></a>2. Use separate thread-free lists for frees by other threads</h4><ul class="ui list">
 <li>avoid atomic operations in the fast path</li>
 <li>the thread-free lists are sharded to pages to minimize contention</li>
 <li>such lists is moved to the local free list atomically every once in a while<ul>
@@ -172,18 +170,12 @@
 </ul>
 </li>
 </ul>
-</li>
-<li>A separate local-free list per page for thread-local frees<ul>
+<h4 id="3-A-separate-local-free-list-per-page-for-thread-local-frees"><a href="#3-A-separate-local-free-list-per-page-for-thread-local-frees" class="headerlink" title="3. A separate local-free list per page for thread-local frees"></a>3. A separate local-free list per page for thread-local frees</h4><ul class="ui list">
 <li>when the allocation free list is empty, the local-free list becomes the new free list</li>
-<li>ensures the generic(slow) allocation path is always taken after a fixed number of allocations<ul>
+<li>ensures the generic(slow) allocation path is always taken after a fixed number of allocations</li>
 <li>temporal cadence</li>
 </ul>
-</li>
-</ul>
-</li>
-<li>No locks</li>
-</ol>
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul class="ui list">
+<h4 id="4-No-locks"><a href="#4-No-locks" class="headerlink" title="4. No locks"></a>4. No locks</h4><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul class="ui list">
 <li><p><a href="https://www.microsoft.com/en-us/research/publication/mimalloc-free-list-sharding-in-action/" target="_blank" rel="noopener">paper</a></p>
 </li>
 <li><p><a href="https://github.com/microsoft/mimalloc" target="_blank" rel="noopener">github</a></p>
@@ -216,7 +208,7 @@
             <div class="column nav-left">
                 
 
-                <a class="ui tiny button disabled"><i class="angle left icon"></i>前一篇</a>
+                <a class="ui tiny button disabled"><i class="angle left icon"></i>Previous</a>
 
                 
             </div>

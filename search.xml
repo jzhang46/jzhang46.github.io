@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Mimalloc: Free List Sharding in Action]]></title>
     <url>%2F2020%2F07%2F10%2Fmimalloc%2F</url>
-    <content type="text"><![CDATA[Main idea: Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc Use separate thread-free lists for frees by other threads avoid atomic operations in the fast path the thread-free lists are sharded to pages to minimize contention such lists is moved to the local free list atomically every once in a while batch the remote frees A separate local-free list per page for thread-local frees when the allocation free list is empty, the local-free list becomes the new free list ensures the generic(slow) allocation path is always taken after a fixed number of allocations temporal cadence No locks References paper github]]></content>
+    <content type="text"><![CDATA[Main idea1. Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc 2. Use separate thread-free lists for frees by other threads avoid atomic operations in the fast path the thread-free lists are sharded to pages to minimize contention such lists is moved to the local free list atomically every once in a while batch the remote frees 3. A separate local-free list per page for thread-local frees when the allocation free list is empty, the local-free list becomes the new free list ensures the generic(slow) allocation path is always taken after a fixed number of allocations temporal cadence 4. No locksReferences paper github]]></content>
   </entry>
   <entry>
     <title><![CDATA[An Analysis of PerformanceEvolution of Linux’s Core Operations]]></title>
