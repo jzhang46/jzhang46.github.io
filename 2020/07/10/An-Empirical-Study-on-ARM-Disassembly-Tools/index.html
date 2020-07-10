@@ -6,20 +6,20 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta name="description" content>
-    <title>Mimalloc: Free List Sharding in Action | iOS Notes</title>
+    <title>An Empirical Study on ARM Disassembly Tools | iOS Notes</title>
 
     <!-- Open Graph -->
-    <meta name="description" content="Main idea1. Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc  2. Use separate thread-free lists for frees by other threads avoid atomic operations in the fast">
+    <meta name="description" content="1. &amp;#x5224;&amp;#x5B9A;&amp;#x6807;&amp;#x51C6; Instruction boundary Function boundary  2. &amp;#x56F0;&amp;#x96BE;1) Instruction boundary  Thumb &amp;amp; ARM&amp;#x4E24;&amp;#x5957;&amp;#x6307;&amp;#x4EE4;&amp;#x96C6;&amp;#x6DF7;&amp;#x5408;&amp;#xFF0C;&amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mimalloc: Free List Sharding in Action">
-<meta property="og:url" content="http://yoursite.com/2020/07/10/mimalloc/index.html">
+<meta property="og:title" content="An Empirical Study on ARM Disassembly Tools">
+<meta property="og:url" content="http://yoursite.com/2020/07/10/An-Empirical-Study-on-ARM-Disassembly-Tools/index.html">
 <meta property="og:site_name" content="iOS Notes">
-<meta property="og:description" content="Main idea1. Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc  2. Use separate thread-free lists for frees by other threads avoid atomic operations in the fast">
+<meta property="og:description" content="1. &amp;#x5224;&amp;#x5B9A;&amp;#x6807;&amp;#x51C6; Instruction boundary Function boundary  2. &amp;#x56F0;&amp;#x96BE;1) Instruction boundary  Thumb &amp;amp; ARM&amp;#x4E24;&amp;#x5957;&amp;#x6307;&amp;#x4EE4;&amp;#x96C6;&amp;#x6DF7;&amp;#x5408;&amp;#xFF0C;&amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-10T04:08:30.796Z">
+<meta property="og:updated_time" content="2020-07-10T04:18:10.601Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mimalloc: Free List Sharding in Action">
-<meta name="twitter:description" content="Main idea1. Extreme free list sharding a free list per mimalloc page (64 KB) keeps locality of malloc  2. Use separate thread-free lists for frees by other threads avoid atomic operations in the fast">
+<meta name="twitter:title" content="An Empirical Study on ARM Disassembly Tools">
+<meta name="twitter:description" content="1. &amp;#x5224;&amp;#x5B9A;&amp;#x6807;&amp;#x51C6; Instruction boundary Function boundary  2. &amp;#x56F0;&amp;#x96BE;1) Instruction boundary  Thumb &amp;amp; ARM&amp;#x4E24;&amp;#x5957;&amp;#x6307;&amp;#x4EE4;&amp;#x96C6;&amp;#x6DF7;&amp;#x5408;&amp;#xFF0C;&amp;">
 
     <script type="application/ld+json">
 {
@@ -136,7 +136,7 @@
             <!--<div class="ui one column grid">-->
                 <!--<div class="column">-->
                     <!--<div class="ui main container">-->
-                        <div id="post-mimalloc" class="ui main container article-type-post">
+                        <div id="post-An-Empirical-Study-on-ARM-Disassembly-Tools" class="ui main container article-type-post">
 
     
 
@@ -149,7 +149,7 @@
 
 <h1 class="ui header">
     
-    Mimalloc: Free List Sharding in Action
+    An Empirical Study on ARM Disassembly Tools
 </h1>
 
 
@@ -158,28 +158,22 @@
 
                     <div class="article-entry" itemprop="articleBody">
                         
-                        <h2 id="Main-idea"><a href="#Main-idea" class="headerlink" title="Main idea"></a>Main idea</h2><h4 id="1-Extreme-free-list-sharding"><a href="#1-Extreme-free-list-sharding" class="headerlink" title="1. Extreme free list sharding"></a>1. Extreme free list sharding</h4><ul class="ui list">
-<li>a free list per mimalloc page (64 KB)</li>
-<li>keeps locality of malloc</li>
+                        <h4 id="1-&#x5224;&#x5B9A;&#x6807;&#x51C6;"><a href="#1-&#x5224;&#x5B9A;&#x6807;&#x51C6;" class="headerlink" title="1. &#x5224;&#x5B9A;&#x6807;&#x51C6;"></a>1. &#x5224;&#x5B9A;&#x6807;&#x51C6;</h4><ul class="ui list">
+<li>Instruction boundary</li>
+<li>Function boundary</li>
 </ul>
-<h4 id="2-Use-separate-thread-free-lists-for-frees-by-other-threads"><a href="#2-Use-separate-thread-free-lists-for-frees-by-other-threads" class="headerlink" title="2. Use separate thread-free lists for frees by other threads"></a>2. Use separate thread-free lists for frees by other threads</h4><ul class="ui list">
-<li>avoid atomic operations in the fast path</li>
-<li>the thread-free lists are sharded to pages to minimize contention</li>
-<li>such lists is moved to the local free list atomically every once in a while<ul>
-<li>batch the remote frees</li>
+<h4 id="2-&#x56F0;&#x96BE;"><a href="#2-&#x56F0;&#x96BE;" class="headerlink" title="2. &#x56F0;&#x96BE;"></a>2. &#x56F0;&#x96BE;</h4><p>1) Instruction boundary</p>
+<ul class="ui list">
+<li>Thumb &amp; ARM&#x4E24;&#x5957;&#x6307;&#x4EE4;&#x96C6;&#x6DF7;&#x5408;&#xFF0C;&#x9700;&#x8981;&#x5224;&#x522B;</li>
+<li>Inline data is common in ARM</li>
 </ul>
-</li>
+<p>2) Function boundary</p>
+<ul class="ui list">
+<li>Thumb&#x4E2D;&#x7684;B&#x6307;&#x4EE4;&#x8DF3;&#x8F6C;&#x8303;&#x56F4;&#x53EA;&#x6709;&#x51E0;KB&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x590D;&#x7528;BL&#x6307;&#x4EE4;&#x6765;&#x8FDB;&#x884C;&#x8DF3;&#x8F6C;&#xFF0C;&#x5BFC;&#x81F4;&#x96BE;&#x4EE5;&#x533A;&#x5206;&#x662F;&#x76F4;&#x8DF3;&#x8FD8;&#x662F;function call</li>
+<li>BL Rx &#x8FD9;&#x79CD; indirect jump &#x53EF;&#x80FD;&#x9700;&#x8981;&#x770B;&#x8DF3;&#x8F6C;&#x76EE;&#x6807;&#x5730;&#x5740;&#x7684; 0 bit &#x6765;&#x51B3;&#x5B9A;&#x76EE;&#x6807;&#x662F;thumb&#x8FD8;&#x662F;arm</li>
 </ul>
-<h4 id="3-A-separate-local-free-list-per-page-for-thread-local-frees"><a href="#3-A-separate-local-free-list-per-page-for-thread-local-frees" class="headerlink" title="3. A separate local-free list per page for thread-local frees"></a>3. A separate local-free list per page for thread-local frees</h4><ul class="ui list">
-<li>when the allocation free list is empty, the local-free list becomes the new free list</li>
-<li>ensures the generic(slow) allocation path is always taken after a fixed number of allocations</li>
-<li>temporal cadence</li>
-</ul>
-<h4 id="4-No-locks"><a href="#4-No-locks" class="headerlink" title="4. No locks"></a>4. No locks</h4><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul class="ui list">
-<li><p><a href="https://www.microsoft.com/en-us/research/publication/mimalloc-free-list-sharding-in-action/" target="_blank" rel="noopener">paper</a></p>
-</li>
-<li><p><a href="https://github.com/microsoft/mimalloc" target="_blank" rel="noopener">github</a></p>
-</li>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul class="ui list">
+<li><a href="https://yajin.org/papers/issta20.pdf" target="_blank" rel="noopener">paper</a></li>
 </ul>
 
                         
@@ -191,7 +185,7 @@
 
                     <div class="description post-description">
     <span class="post-description-item">
-        <time datetime="2020-07-10T03:58:58.000Z" itemprop="datePublished">2020-07-10</time>
+        <time datetime="2020-07-10T04:14:23.000Z" itemprop="datePublished">2020-07-10</time>
 
     </span>
     <span class="post-description-item">
@@ -208,23 +202,16 @@
             <div class="column nav-left">
                 
 
-                <a href="/2020/07/10/An-Empirical-Study-on-ARM-Disassembly-Tools/" class="ui tiny button">
-
-                    <i class="angle left icon"></i>
-                    
-                    An Empirical Study on ARM Disassembly Tools
-                    
-
-                </a>
+                <a class="ui tiny button disabled"><i class="angle left icon"></i>Previous</a>
 
                 
             </div>
             <div class="column nav-right">
                 
 
-                <a href="/2019/11/13/linux-core-op-performance/" class="ui tiny button">
+                <a href="/2020/07/10/mimalloc/" class="ui tiny button">
                     
-                    An Analysis of PerformanceEvolution of Linux’s Core Operations
+                    Mimalloc: Free List Sharding in Action
                     
                     <i class="angle right icon"></i></a>
                 
